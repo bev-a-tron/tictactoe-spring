@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ttt.iml" filepath="$PROJECT_DIR$/ttt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tictactoe-spring.iml" filepath="$PROJECT_DIR$/tictactoe-spring.iml" />
     </modules>
   </component>
 </project>
