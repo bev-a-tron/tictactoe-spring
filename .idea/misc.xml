@@ -3,7 +3,10 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
-  <component name="IdProvider" IDEtalkID="D3B628869BB0882A6575F21DB2F5C2B6" />
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
+  <component name="IdProvider" IDEtalkID="41F5C376F70980EDD2E8ACF0A378FCCB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
@@ -114,22 +117,6 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.7</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
 
