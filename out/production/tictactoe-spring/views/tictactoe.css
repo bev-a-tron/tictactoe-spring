@@ -1,0 +1,19 @@
+#game-board {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.square {
+    width: 300px;
+    height: 300px;
+}
+
+.vertical-lines {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.horizontal-lines {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
