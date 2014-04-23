@@ -37,6 +37,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.mockito:mockito-all:1.9.5" level="project" />
+    <orderEntry type="library" name="org.springframework.boot:spring-boot-autoconfigure:1.0.1.RELEASE" level="project" />
+    <orderEntry type="library" name="org.springframework.boot:spring-boot:1.0.1.RELEASE" level="project" />
   </component>
 </module>
 
