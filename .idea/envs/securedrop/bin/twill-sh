@@ -1,0 +1,10 @@
+#!/Users/kyleolivo/Development/web/envs/securedrop/bin/python2.7
+# EASY-INSTALL-ENTRY-SCRIPT: 'twill==0.9','console_scripts','twill-sh'
+__requires__ = 'twill==0.9'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('twill==0.9', 'console_scripts', 'twill-sh')()
+    )
