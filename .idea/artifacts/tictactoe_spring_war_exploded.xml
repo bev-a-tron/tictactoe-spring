@@ -13,6 +13,8 @@
           <element id="library" level="project" name="org.mockito:mockito-all:1.9.5" />
           <element id="library" level="project" name="org.springframework.boot:spring-boot-autoconfigure:1.0.1.RELEASE" />
           <element id="library" level="project" name="org.springframework.boot:spring-boot:1.0.1.RELEASE" />
+          <element id="library" level="project" name="de.codecentric:jbehave-junit-runner:1.0.1" />
+          <element id="library" level="project" name="org.jbehave:jbehave-spring:3.7.5" />
         </element>
       </element>
     </root>
