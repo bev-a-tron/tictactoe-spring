@@ -58,6 +58,17 @@
         </dependency>
     </dependencies>
 
+    <dependency>
+        <groupId>net.thucydides</groupId>
+        <artifactId>thucydides-core</artifactId>
+        <version>0.9.12</version>
+    </dependency>
+    <dependency>
+        <groupId>net.thucydides</groupId>
+        <artifactId>thucydides-jbehave-plugin</artifactId>
+        <version>0.9.12</version>
+    </dependency>
+
     <build>
         <finalName>tictactoe-spring</finalName>
         <plugins>
