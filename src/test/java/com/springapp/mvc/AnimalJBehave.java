@@ -23,7 +23,7 @@ public class AnimalJBehave extends JUnitStories {
 
     @Override
     public List<String> storyPaths() {
-        return Arrays.asList("tictactoe/Animals.story");
+        return Arrays.asList("com/springapp/mvc/Animals.story");
     }
 
 }

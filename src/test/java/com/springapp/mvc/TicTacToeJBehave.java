@@ -23,7 +23,7 @@ public class TicTacToeJBehave extends JUnitStories {
 
     @Override
     public List<String> storyPaths() {
-        return Arrays.asList("tictactoe/TicTacToe.story");
+        return Arrays.asList("com/springapp/mvc/TicTacToe.story");
     }
 
 }
