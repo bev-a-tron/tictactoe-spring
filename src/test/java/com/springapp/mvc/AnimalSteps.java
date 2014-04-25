@@ -16,10 +16,9 @@ public class AnimalSteps {
 
     @When("$animal makes sound")
     public void whenAnimalMakesSound(@Named("animal") String thisAnimal) {
-        if (thisAnimal.equals("lion")){
+        if (thisAnimal.equals("lion")) {
             sound = "roar";
-        }
-        else if (thisAnimal.equals ("cat")){
+        } else if (thisAnimal.equals("cat")) {
             sound = "meow";
         }
     }
