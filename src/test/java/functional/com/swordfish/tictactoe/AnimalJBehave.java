@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package functional.com.swordfish.tictactoe;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import org.jbehave.core.configuration.Configuration;

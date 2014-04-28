@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package functional.com.swordfish.tictactoe;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Named;

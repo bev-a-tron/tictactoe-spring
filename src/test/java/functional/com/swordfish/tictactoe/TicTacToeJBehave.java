@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package functional.com.swordfish.tictactoe;
 
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 import org.jbehave.core.junit.JUnitStories;
@@ -24,7 +24,7 @@ public class TicTacToeJBehave extends JUnitStories {
 
     @Override
     public List<String> storyPaths() {
-        return Arrays.asList("com/springapp/mvc/TicTacToe.story");
+        return Arrays.asList("functional/com/swordfish/tictactoe/TicTacToe.story");
     }
 
 }
