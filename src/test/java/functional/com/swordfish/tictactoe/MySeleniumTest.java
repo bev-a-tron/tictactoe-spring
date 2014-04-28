@@ -1,4 +1,4 @@
-package com.springapp.mvc;
+package functional.com.swordfish.tictactoe;
 
 import org.junit.Assert;
 import org.junit.Test;
