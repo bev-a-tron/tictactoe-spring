@@ -5,12 +5,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class TicTacToeController {
 
+    Board board;
+
     @Autowired
-    TicTacToeService ticTacToeService;
+    public TicTacToeController(Board board) {
+        this.board = board;
+    }
+
+    public TicTacToeController() {
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showBoard() {
@@ -18,10 +26,16 @@ public class TicTacToeController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String makeMove(
+    public ModelAndView makeMove(
             @RequestParam(value = "player-move-input-name", required = false) String playerMoveInputName) {
-        ticTacToeService.updateModel(playerMoveInputName);
-        return "tictactoe";
+
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+
+        board.put(boxToBeUpdatedIndex);
+        ModelAndView mav = new ModelAndView("tictactoe");
+        mav.addObject("board", board);
+
+        return mav;
     }
 
 

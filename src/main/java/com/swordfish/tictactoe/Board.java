@@ -1,12 +1,11 @@
 package com.swordfish.tictactoe;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Board {
 
-    private String[] boxes;
-
-    public void setBoxes(String[] boxes) {
-        this.boxes = boxes;
-    }
+    private String[] boxes = {"", "", "", "", "", "", "", "", ""};
 
     public String get(int index) {
         return boxes[index];
