@@ -1,34 +1,39 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Tic Tac Toe</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../static/css/tictactoe.css" th:href="@{/css/tictactoe.css}" />
-    <script type="text/javascript" src="../static/js/jquery-2.1.0.js" ></script>
-    <script type="text/javascript" src="../static/js/tictactoe.js"></script>
-</head>
-<body>
+    <head>
+        <title>Tic Tac Toe</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="../static/css/tictactoe.css" th:href="@{/css/tictactoe.css}" />
+        <script type="text/javascript" src="../static/js/jquery-2.1.0.js" ></script>
+        <script type="text/javascript" src="../static/js/tictactoe.js"></script>
+    </head>
+    <body>
+        <form>
+            <label for="player-move-input">Enter move:</label>
+            <input type="text" id="player-move-input" />
+            <button type="submit" id="move-button">Submit</button>
+        </form>
+        <table id="game-board">
+            <tr>
+                <td id="box1" class="square"></td>
+                <td id="box2" class="square vertical-lines"></td>
+                <td id="box3" class="square"></td>
+            </tr>
 
-    <table id="game-board">
-        <tr>
-            <td class="square"></td>
-            <td class="square vertical-lines"></td>
-            <td class="square"></td>
-        </tr>
+            <tr>
+                <td id="box4" class="square horizontal-lines"></td>
+                <td id="box5" class="square horizontal-lines vertical-lines"></td>
+                <td id="box6" class="square horizontal-lines"></td>
+            </tr>
 
-        <tr>
-            <td class="square horizontal-lines"></td>
-            <td class="square horizontal-lines vertical-lines"></td>
-            <td class="square horizontal-lines"></td>
-        </tr>
+            <tr>
+                <td id="box7" class="square"></td>
+                <td id="box8" class="square vertical-lines"></td>
+                <td id="box9" class="square"></td>
+            </tr>
 
-        <tr>
-            <td class="square"></td>
-            <td class="square vertical-lines"></td>
-            <td class="square"></td>
-        </tr>
+        </table>
 
-    </table>
 
-</body>
+    </body>
 </html>
