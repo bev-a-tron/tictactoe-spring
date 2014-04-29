@@ -8,9 +8,9 @@
         <script type="text/javascript" src="../static/js/tictactoe.js"></script>
     </head>
     <body>
-        <form>
+        <form id = "move" method="post" action="/">
             <label for="player-move-input">Enter move:</label>
-            <input type="text" id="player-move-input" />
+            <input type="text" id="player-move-input" name="player-move-input-name" />
             <button type="submit" id="move-button">Submit</button>
         </form>
         <table id="game-board">
