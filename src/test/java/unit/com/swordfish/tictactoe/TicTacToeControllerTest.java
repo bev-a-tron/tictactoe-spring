@@ -4,12 +4,16 @@ import com.swordfish.tictactoe.Board;
 import com.swordfish.tictactoe.TicTacToeController;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.StringContains.containsString;
 
 public class TicTacToeControllerTest {
 
@@ -43,7 +47,6 @@ public class TicTacToeControllerTest {
         ModelAndView mav = ticTacToeController.makeMove(playerMoveInput);
 
         assertEquals("tictactoe", mav.getViewName());
-        assertTrue(mav.getModel().containsKey("box0"));
         assertTrue(mav.getModel().containsKey("box1"));
         assertTrue(mav.getModel().containsKey("box2"));
         assertTrue(mav.getModel().containsKey("box3"));
@@ -52,5 +55,19 @@ public class TicTacToeControllerTest {
         assertTrue(mav.getModel().containsKey("box6"));
         assertTrue(mav.getModel().containsKey("box7"));
         assertTrue(mav.getModel().containsKey("box8"));
+        assertTrue(mav.getModel().containsKey("box9"));
+    }
+
+    @Test
+    public void shouldAddErrorToModelWhenGivenOutOfScopeValue() {
+
+        String outOfScopeValue = "0";
+
+        ModelAndView mav = ticTacToeController.makeMove(outOfScopeValue);
+
+        String error = (String) mav.getModel().get("errors");
+
+        assertThat(error, containsString("Please enter a number between 1 and 9."));
+
     }
 }

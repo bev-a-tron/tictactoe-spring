@@ -28,18 +28,31 @@ public class TicTacToeController {
 
         int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
 
-        board.put(boxToBeUpdatedIndex);
+        // if boxToBeUpdatedIndex is <1 or >9 or a string, then errors = not Null
+        // <1, neg_error = "Please enter a number 1-9."
+        // >9, too_high_error = "Please enter a number 1-9."
+        // string, string_error = "Words are not allowed.  Please enter a number 1-9."
+        // mav.addObject("errors", name_of_error)
+
+        String error = "";
+        if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
+            error = "Number out of range.  Please enter a number between 1 and 9.";
+        } else {
+            board.put(boxToBeUpdatedIndex);
+        }
 
         ModelAndView mav = new ModelAndView("tictactoe");
-        mav.addObject("box0", board.get(0));
-        mav.addObject("box1", board.get(1));
-        mav.addObject("box2", board.get(2));
-        mav.addObject("box3", board.get(3));
-        mav.addObject("box4", board.get(4));
-        mav.addObject("box5", board.get(5));
-        mav.addObject("box6", board.get(6));
-        mav.addObject("box7", board.get(7));
-        mav.addObject("box8", board.get(8));
+
+        mav.addObject("errors", error);
+        mav.addObject("box1", board.get(0));
+        mav.addObject("box2", board.get(1));
+        mav.addObject("box3", board.get(2));
+        mav.addObject("box4", board.get(3));
+        mav.addObject("box5", board.get(4));
+        mav.addObject("box6", board.get(5));
+        mav.addObject("box7", board.get(6));
+        mav.addObject("box8", board.get(7));
+        mav.addObject("box9", board.get(8));
 
         return mav;
     }
