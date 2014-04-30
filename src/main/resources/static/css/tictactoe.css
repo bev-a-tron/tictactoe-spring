@@ -17,3 +17,9 @@
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
+
+td {
+    font-size: 150px;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
