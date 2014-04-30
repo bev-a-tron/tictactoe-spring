@@ -43,6 +43,14 @@ public class TicTacToeControllerTest {
         ModelAndView mav = ticTacToeController.makeMove(playerMoveInput);
 
         assertEquals("tictactoe", mav.getViewName());
-        assertTrue(mav.getModel().containsKey("board"));
+        assertTrue(mav.getModel().containsKey("box0"));
+        assertTrue(mav.getModel().containsKey("box1"));
+        assertTrue(mav.getModel().containsKey("box2"));
+        assertTrue(mav.getModel().containsKey("box3"));
+        assertTrue(mav.getModel().containsKey("box4"));
+        assertTrue(mav.getModel().containsKey("box5"));
+        assertTrue(mav.getModel().containsKey("box6"));
+        assertTrue(mav.getModel().containsKey("box7"));
+        assertTrue(mav.getModel().containsKey("box8"));
     }
 }

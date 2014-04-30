@@ -30,7 +30,6 @@ public class TictactoeTest {
         Assert.assertThat(element.getAttribute("id"), is("game-board"));
     }
 
-    @Ignore("WIP #2 | Kyle, Eliza, & Bev | adding logic for the player move")
     @Test
     public void shouldMarkBoard() throws Exception {
         driver.navigate().to("localhost:8080/");
