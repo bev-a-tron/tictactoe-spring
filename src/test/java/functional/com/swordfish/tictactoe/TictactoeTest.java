@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.internal.matchers.StringContains.containsString;
 
 public class TictactoeTest {
 
@@ -44,4 +45,17 @@ public class TictactoeTest {
         Assert.assertThat(box1.getText().toLowerCase(), is("x"));
     }
 
+    @Test
+    public void shouldPrintOutErrors() throws Exception {
+        driver.navigate().to("localhost:8080/");
+
+        WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("0");
+
+        driver.findElement(By.id("move-button")).click();
+
+        WebElement errorMessage = driver.findElement(By.id("error-message"));
+        Assert.assertThat(errorMessage.getText(), containsString("Number out of range."));
+    }
 }
