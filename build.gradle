@@ -15,7 +15,7 @@ apply plugin: 'spring-boot'
 
 jar {
     baseName = 'tic-tac-toe'
-    version =  '0.1.0'
+    version = '0.1.0'
 }
 
 repositories {
@@ -24,10 +24,10 @@ repositories {
 }
 
 dependencies {
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf", 
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf",
             "de.codecentric:jbehave-junit-runner:1.0.1",
-	    "org.jbehave:jbehave-core:3.6.8",
-	    "org.seleniumhq.selenium:selenium-firefox-driver:2.41.0")
+            "org.jbehave:jbehave-core:3.6.8",
+            "org.seleniumhq.selenium:selenium-firefox-driver:2.41.0")
     testCompile("junit:junit")
 }
 
