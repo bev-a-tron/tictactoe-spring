@@ -26,19 +26,11 @@ public class TicTacToeController {
     public ModelAndView makeMove(
             @RequestParam(value = "player-move-input-name", required = false) String playerMoveInputName) {
 
-        boolean integerInput = validateIntegerInput(playerMoveInputName);
-        String error = "";
-        if (integerInput) {
+        String error = getError(playerMoveInputName);
 
+        if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
-
-            if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
-                error = "Number out of range.  Please enter a number between 1 and 9.";
-            } else {
-                board.put(boxToBeUpdatedIndex);
-            }
-        } else {
-            error = "Words are not allowed. Please enter a number between 1 and 9.";
+            board.put(boxToBeUpdatedIndex);
         }
 
         ModelAndView mav = new ModelAndView("tictactoe");
@@ -55,6 +47,27 @@ public class TicTacToeController {
         mav.addObject("box9", board.get(8));
 
         return mav;
+    }
+
+    private String getError(String playerMoveInputName) {
+        boolean integerInput = validateIntegerInput(playerMoveInputName);
+        String error = "";
+        if (integerInput) {
+            if (!isInRange(playerMoveInputName)){
+                error = "Number out of range.  Please enter a number between 1 and 9.";
+            }
+        } else {
+            error = "Words are not allowed. Please enter a number between 1 and 9.";
+        }
+        return error;
+    }
+
+    private boolean isInRange(String playerMoveInputName) {
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+        if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
+            return false;
+        }
+        return true;
     }
 
     private boolean validateIntegerInput(String input) {
