@@ -26,19 +26,19 @@ public class TicTacToeController {
     public ModelAndView makeMove(
             @RequestParam(value = "player-move-input-name", required = false) String playerMoveInputName) {
 
-        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
-
-        // if boxToBeUpdatedIndex is <1 or >9 or a string, then errors = not Null
-        // <1, neg_error = "Please enter a number 1-9."
-        // >9, too_high_error = "Please enter a number 1-9."
-        // string, string_error = "Words are not allowed.  Please enter a number 1-9."
-        // mav.addObject("errors", name_of_error)
-
+        boolean integerInput = validateIntegerInput(playerMoveInputName);
         String error = "";
-        if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
-            error = "Number out of range.  Please enter a number between 1 and 9.";
+        if (integerInput) {
+
+            int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+
+            if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
+                error = "Number out of range.  Please enter a number between 1 and 9.";
+            } else {
+                board.put(boxToBeUpdatedIndex);
+            }
         } else {
-            board.put(boxToBeUpdatedIndex);
+            error = "Words are not allowed. Please enter a number between 1 and 9.";
         }
 
         ModelAndView mav = new ModelAndView("tictactoe");
@@ -55,5 +55,14 @@ public class TicTacToeController {
         mav.addObject("box9", board.get(8));
 
         return mav;
+    }
+
+    private boolean validateIntegerInput(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException numberFormat) {
+            return false;
+        }
+        return true;
     }
 }

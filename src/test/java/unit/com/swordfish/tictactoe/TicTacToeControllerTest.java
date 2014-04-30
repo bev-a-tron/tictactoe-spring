@@ -67,7 +67,20 @@ public class TicTacToeControllerTest {
 
         String error = (String) mav.getModel().get("errors");
 
-        assertThat(error, containsString("Please enter a number between 1 and 9."));
+        assertThat(error, containsString("Number out of range."));
+
+    }
+
+    @Test
+    public void shouldAddStringErrorWhenANonNumericalValueIsPassedIn() {
+
+        String nonIntegerValue = "string";
+
+        ModelAndView mav = ticTacToeController.makeMove(nonIntegerValue);
+
+        String error = (String) mav.getModel().get("errors");
+
+        assertThat(error, containsString("Words are not allowed."));
 
     }
 }
