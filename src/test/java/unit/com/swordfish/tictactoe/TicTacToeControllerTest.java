@@ -4,10 +4,7 @@ import com.swordfish.tictactoe.Board;
 import com.swordfish.tictactoe.TicTacToeController;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
@@ -83,4 +80,6 @@ public class TicTacToeControllerTest {
         assertThat(error, containsString("Words are not allowed."));
 
     }
+
+
 }

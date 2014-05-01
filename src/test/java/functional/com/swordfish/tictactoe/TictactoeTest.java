@@ -9,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.internal.matchers.StringContains.containsString;
 
-public class TictactoeTest {
+public class TicTacToeTest {
 
     WebDriver driver;
 
@@ -57,5 +57,31 @@ public class TictactoeTest {
 
         WebElement errorMessage = driver.findElement(By.id("error-message"));
         Assert.assertThat(errorMessage.getText(), containsString("Number out of range."));
+    }
+
+    @Ignore("WIP #3 | Kyle, Eliza, and Bev | working on 2nd player move")
+    @Test
+    public void shouldMarkBoardWithO() throws Exception {
+        driver.navigate().to("localhost:8080/");
+
+        WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("1");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("2");
+
+        driver.findElement(By.id("move-button")).click();
+
+        WebElement box1 = driver.findElement(By.id("box1"));
+        WebElement box2 = driver.findElement(By.id("box2"));
+        WebElement box3 = driver.findElement(By.id("box3"));
+        Assert.assertThat(box1.getText().toLowerCase(), is("x"));
+        Assert.assertThat(box2.getText().toLowerCase(), is("o"));
+        Assert.assertThat(box3.getText().toLowerCase(), is(""));
+
     }
 }
