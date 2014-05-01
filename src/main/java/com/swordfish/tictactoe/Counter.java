@@ -4,7 +4,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Counter {
-    public void increment() {
+    private int turnNumber = 1;
 
+    public void increment() {
+        turnNumber++;
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
     }
 }
