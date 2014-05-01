@@ -75,4 +75,35 @@ public class TicTacToeTest {
         Assert.assertThat(box2.getText().toLowerCase(), is("o"));
     }
 
+    @Test
+    public void shouldNotLetPlayerChooseBoxThatIsTaken() throws Exception {
+
+        WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("1");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("1");
+
+        driver.findElement(By.id("move-button")).click();
+
+        WebElement box1 = driver.findElement(By.id("box1"));
+        WebElement errorMessage = driver.findElement(By.id("error-message"));
+
+        Assert.assertThat(box1.getText().toLowerCase(), is("x"));
+        Assert.assertThat(errorMessage.getText(), containsString("You can't go there."));
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("2");
+
+        driver.findElement(By.id("move-button")).click();
+
+        WebElement box2 = driver.findElement(By.id("box2"));
+        Assert.assertThat(box2.getText().toLowerCase(), is("o"));
+
+    }
 }

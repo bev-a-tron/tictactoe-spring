@@ -14,4 +14,8 @@ public class Board {
     public void put(int boxToBeUpdatedIndex, String symbol) {
         boxes[boxToBeUpdatedIndex] = symbol;
     }
+
+    public boolean contains(boolean integerInput) {
+        return false;
+    }
 }

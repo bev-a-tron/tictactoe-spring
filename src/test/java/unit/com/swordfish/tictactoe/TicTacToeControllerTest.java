@@ -12,9 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 public class TicTacToeControllerTest {
@@ -108,15 +106,27 @@ public class TicTacToeControllerTest {
     public void shouldPutOIntoBoardWhenPlayer2Turn() throws Exception {
         Counter mockCounter = mock(Counter.class);
         Board mockBoard = mock(Board.class);
-        when(mockCounter.getTurnNumber()).thenReturn(2);
-
         TicTacToeController anotherTicTacToeController = new TicTacToeController(mockBoard, mockCounter);
-
         String playerMove = "3";
+        int playerMoveIndex = Integer.parseInt(playerMove) - 1;
+
+        when(mockCounter.getTurnNumber()).thenReturn(2);
+        when(mockBoard.get(anyInt())).thenReturn("");
+
         anotherTicTacToeController.makeMove(playerMove);
 
-
-        int playerMoveIndex = Integer.parseInt(playerMove) - 1;
         verify(mockBoard).put(playerMoveIndex, PLAYER_2_SYMBOL);
+    }
+
+    @Test
+    public void shouldReceiveErrorWhenMovingToSamePosition() throws Exception {
+
+        String playerMoveInputName = "1";
+        ticTacToeController.makeMove(playerMoveInputName);
+        ModelAndView mav = ticTacToeController.makeMove(playerMoveInputName);
+
+        String error = (String) mav.getModel().get("errors");
+
+        assertThat(error, containsString("You can't go there."));
     }
 }
