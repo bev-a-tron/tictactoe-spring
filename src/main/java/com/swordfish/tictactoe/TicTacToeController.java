@@ -22,6 +22,7 @@ public class TicTacToeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showBoard() {
         this.board = new Board();
+        this.counter = new Counter();
         return "tictactoe";
     }
 
@@ -33,7 +34,8 @@ public class TicTacToeController {
 
         if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
-            board.put(boxToBeUpdatedIndex);
+            String symbol = getSymbol(counter.getTurnNumber());
+            board.put(boxToBeUpdatedIndex, symbol);
             counter.increment();
         }
 
@@ -51,6 +53,14 @@ public class TicTacToeController {
         mav.addObject("box9", board.get(8));
 
         return mav;
+    }
+
+    private String getSymbol(int turnNumber) {
+        if (turnNumber % 2 == 1) {
+            return "x";
+        } else {
+            return "o";
+        }
     }
 
     private String getError(String playerMoveInputName) {

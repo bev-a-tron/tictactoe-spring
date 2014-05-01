@@ -14,9 +14,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 
 public class TicTacToeControllerTest {
 
+    private static final String PLAYER_2_SYMBOL="o";
+    private static final String PLAYER_1_SYMBOL="x";
     Board board;
     Counter counter;
 
@@ -98,5 +102,21 @@ public class TicTacToeControllerTest {
 
         verify(mockCounter).increment();
 
+    }
+
+    @Test
+    public void shouldPutOIntoBoardWhenPlayer2Turn() throws Exception {
+        Counter mockCounter = mock(Counter.class);
+        Board mockBoard = mock(Board.class);
+        when(mockCounter.getTurnNumber()).thenReturn(2);
+
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(mockBoard, mockCounter);
+
+        String playerMove = "3";
+        anotherTicTacToeController.makeMove(playerMove);
+
+
+        int playerMoveIndex = Integer.parseInt(playerMove) - 1;
+        verify(mockBoard).put(playerMoveIndex, PLAYER_2_SYMBOL);
     }
 }
