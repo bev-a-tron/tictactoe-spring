@@ -26,18 +26,10 @@ public class TicTacToeController {
     public ModelAndView makeMove(
             @RequestParam(value = "player-move-input-name", required = false) String playerMoveInputName) {
 
-        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+        String error = getError(playerMoveInputName);
 
-        // if boxToBeUpdatedIndex is <1 or >9 or a string, then errors = not Null
-        // <1, neg_error = "Please enter a number 1-9."
-        // >9, too_high_error = "Please enter a number 1-9."
-        // string, string_error = "Words are not allowed.  Please enter a number 1-9."
-        // mav.addObject("errors", name_of_error)
-
-        String error = "";
-        if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
-            error = "Number out of range.  Please enter a number between 1 and 9.";
-        } else {
+        if (error.isEmpty()) {
+            int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
             board.put(boxToBeUpdatedIndex);
         }
 
@@ -55,5 +47,35 @@ public class TicTacToeController {
         mav.addObject("box9", board.get(8));
 
         return mav;
+    }
+
+    private String getError(String playerMoveInputName) {
+        boolean integerInput = validateIntegerInput(playerMoveInputName);
+        String error = "";
+        if (integerInput) {
+            if (!isInRange(playerMoveInputName)){
+                error = "Number out of range.  Please enter a number between 1 and 9.";
+            }
+        } else {
+            error = "Words are not allowed. Please enter a number between 1 and 9.";
+        }
+        return error;
+    }
+
+    private boolean isInRange(String playerMoveInputName) {
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+        if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateIntegerInput(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException numberFormat) {
+            return false;
+        }
+        return true;
     }
 }

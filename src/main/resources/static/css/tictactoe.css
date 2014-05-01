@@ -3,6 +3,10 @@
     margin-right:auto;
 }
 
+#error-message {
+    height: 50px;
+}
+
 .square {
     width: 200px;
     height: 200px;

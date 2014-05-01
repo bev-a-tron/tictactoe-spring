@@ -13,6 +13,7 @@
             <input type="text" id="player-move-input" name="player-move-input-name" />
             <button type="submit" id="move-button">Submit</button>
         </form>
+        <div id="error-message" th:text="${errors}"></div>
         <table id="game-board">
             <tr>
                 <td id="box1" class="square" th:text="${box1}">stuff</td>

@@ -4,10 +4,7 @@ import com.swordfish.tictactoe.Board;
 import com.swordfish.tictactoe.TicTacToeController;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
@@ -67,7 +64,22 @@ public class TicTacToeControllerTest {
 
         String error = (String) mav.getModel().get("errors");
 
-        assertThat(error, containsString("Please enter a number between 1 and 9."));
+        assertThat(error, containsString("Number out of range."));
 
     }
+
+    @Test
+    public void shouldAddStringErrorWhenANonNumericalValueIsPassedIn() {
+
+        String nonIntegerValue = "string";
+
+        ModelAndView mav = ticTacToeController.makeMove(nonIntegerValue);
+
+        String error = (String) mav.getModel().get("errors");
+
+        assertThat(error, containsString("Words are not allowed."));
+
+    }
+
+
 }
