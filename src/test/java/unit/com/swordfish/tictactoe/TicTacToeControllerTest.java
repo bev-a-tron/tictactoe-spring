@@ -129,4 +129,21 @@ public class TicTacToeControllerTest {
 
         assertThat(error, containsString("You can't go there."));
     }
+
+    @Test
+    public void shouldAddEndOfGameMessageToModel() throws Exception {
+        Board stubBoard = mock(Board.class);
+        Counter stubCounter = mock(Counter.class);
+
+        when(stubCounter.getTurnNumber()).thenReturn(10);
+        when(stubBoard.get(anyInt())).thenReturn("");
+
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubCounter);
+        String playerMove = "9";
+        ModelAndView mav = anotherTicTacToeController.makeMove(playerMove);
+
+        String playAgainMessage = (String) mav.getModel().get("playAgainMessage");
+
+        assertThat(playAgainMessage, containsString("Play again?"));
+    }
 }
