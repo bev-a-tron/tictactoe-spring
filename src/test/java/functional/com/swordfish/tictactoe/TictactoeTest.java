@@ -117,7 +117,7 @@ public class TicTacToeTest {
             fillOneBox(playerMoveInput);
         }
 
-        WebElement endOfGameMessage = driver.findElement(By.id("end-of-game-message"));
+        WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
 
         assertThat(endOfGameMessage.getText(), containsString("Game over. Play again?"));
     }

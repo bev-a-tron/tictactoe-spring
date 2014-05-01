@@ -3,8 +3,8 @@
     margin-right:auto;
 }
 
-#error-message {
-    height: 50px;
+.message {
+    height: 20px;
 }
 
 .square {
