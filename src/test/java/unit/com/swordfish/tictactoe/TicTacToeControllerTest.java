@@ -1,6 +1,7 @@
 package unit.com.swordfish.tictactoe;
 
 import com.swordfish.tictactoe.Board;
+import com.swordfish.tictactoe.Counter;
 import com.swordfish.tictactoe.TicTacToeController;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,21 +12,25 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class TicTacToeControllerTest {
 
     Board board;
+    Counter counter;
 
     TicTacToeController ticTacToeController;
 
     public TicTacToeControllerTest() {
         board = new Board();
+        counter = new Counter();
     }
 
     @Before
     public void setUp() throws Exception {
 
-        ticTacToeController = new TicTacToeController(board);
+        ticTacToeController = new TicTacToeController(board, counter);
     }
 
     @Test
@@ -81,5 +86,17 @@ public class TicTacToeControllerTest {
 
     }
 
+    @Test
+    public void shouldTellCounterToIncrementWhenPlayerMovesSuccessfully() throws Exception {
 
+        Counter mockCounter = mock(Counter.class);
+        String validPlayerMoveInput = "1";
+
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(board, mockCounter);
+
+        anotherTicTacToeController.makeMove(validPlayerMoveInput);
+
+        verify(mockCounter).increment();
+
+    }
 }

@@ -11,14 +11,17 @@ import org.springframework.web.servlet.ModelAndView;
 public class TicTacToeController {
 
     Board board;
+    Counter counter;
 
     @Autowired
-    public TicTacToeController(Board board) {
+    public TicTacToeController(Board board, Counter counter) {
         this.board = board;
+        this.counter = counter;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showBoard() {
+        this.board = new Board();
         return "tictactoe";
     }
 
@@ -31,6 +34,7 @@ public class TicTacToeController {
         if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
             board.put(boxToBeUpdatedIndex);
+            counter.increment();
         }
 
         ModelAndView mav = new ModelAndView("tictactoe");
