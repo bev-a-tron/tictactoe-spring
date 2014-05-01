@@ -16,6 +16,7 @@ public class TicTacToeTest {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
+        driver.navigate().to("localhost:8080/");
     }
 
     @After
@@ -26,15 +27,12 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoard() {
-        driver.navigate().to("localhost:8080/");
         WebElement element = driver.findElement(By.id("game-board"));
         Assert.assertThat(element.getAttribute("id"), is("game-board"));
     }
 
     @Test
     public void shouldMarkBoard() throws Exception {
-        driver.navigate().to("localhost:8080/");
-
         WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
         playerMoveInput.clear();
         playerMoveInput.sendKeys("1");
@@ -47,8 +45,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPrintOutErrors() throws Exception {
-        driver.navigate().to("localhost:8080/");
-
         WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
         playerMoveInput.clear();
         playerMoveInput.sendKeys("0");
@@ -61,8 +57,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldMarkBoardWithO() throws Exception {
-        driver.navigate().to("localhost:8080/");
-
         WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
         playerMoveInput.clear();
         playerMoveInput.sendKeys("1");
@@ -79,8 +73,6 @@ public class TicTacToeTest {
         WebElement box2 = driver.findElement(By.id("box2"));
         Assert.assertThat(box1.getText().toLowerCase(), is("x"));
         Assert.assertThat(box2.getText().toLowerCase(), is("o"));
-
     }
-
 
 }
