@@ -30,7 +30,6 @@ public class TicTacToeController {
     public ModelAndView makeMove(
             @RequestParam(value = "player-move-input-name", required = false) String playerMoveInputName) {
 
-        String playAgainMessage = "";
         String error = getError(playerMoveInputName);
 
         if (error.isEmpty()) {
@@ -40,14 +39,10 @@ public class TicTacToeController {
             counter.increment();
         }
 
-        if (counter.getTurnNumber() == 10) {
-            playAgainMessage = "Game over. Play again?";
-        }
-
         ModelAndView mav = new ModelAndView("tictactoe");
 
         mav.addObject("errors", error);
-        mav.addObject("playAgainMessage", playAgainMessage);
+        mav.addObject("turnNumber", counter.getTurnNumber());
         mav.addObject("box1", board.get(0));
         mav.addObject("box2", board.get(1));
         mav.addObject("box3", board.get(2));

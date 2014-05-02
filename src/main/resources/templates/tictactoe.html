@@ -8,13 +8,15 @@
         <script type="text/javascript" src="../static/js/tictactoe.js"></script>
     </head>
     <body>
-        <form id = "move" method="post" action="/">
-            <label for="player-move-input">Enter move:</label>
-            <input type="text" id="player-move-input" name="player-move-input-name" />
-            <button type="submit" id="move-button">Submit</button>
-        </form>
-        <div id="error-message" class="message" th:text="${errors}"></div>
-        <div id="play-again-message" class="message" th:text="${playAgainMessage}"></div>
+        <div id="header">
+            <form id = "move" method="post" action="/">
+                <label for="player-move-input">Enter move:</label>
+                <input type="text" id="player-move-input" name="player-move-input-name" />
+                <button type="submit" id="move-button">Submit</button>
+            </form>
+            <div id="error-message" th:text="${errors}"></div>
+            <div th:if="${turnNumber == 10}" id="play-again-message">Game over. <a href="/" id="play-again-link">Play again?</a></div>
+        </div>
         <table id="game-board">
             <tr>
                 <td id="box1" class="square" th:text="${box1}">x</td>

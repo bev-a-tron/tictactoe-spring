@@ -142,8 +142,8 @@ public class TicTacToeControllerTest {
         String playerMove = "9";
         ModelAndView mav = anotherTicTacToeController.makeMove(playerMove);
 
-        String playAgainMessage = (String) mav.getModel().get("playAgainMessage");
+        Integer playAgainMessage = (Integer) mav.getModel().get("turnNumber");
 
-        assertThat(playAgainMessage, containsString("Play again?"));
+        assertThat(playAgainMessage, is(10));
     }
 }
