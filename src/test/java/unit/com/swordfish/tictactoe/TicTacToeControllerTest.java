@@ -110,7 +110,8 @@ public class TicTacToeControllerTest {
         String playerMove = "3";
         int playerMoveIndex = Integer.parseInt(playerMove) - 1;
 
-        when(mockCounter.getTurnNumber()).thenReturn(2);
+        int secondPlayerTurnNumber = 2;
+        when(mockCounter.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
         when(mockBoard.get(anyInt())).thenReturn("");
 
         anotherTicTacToeController.makeMove(playerMove);
@@ -135,7 +136,8 @@ public class TicTacToeControllerTest {
         Board stubBoard = mock(Board.class);
         Counter stubCounter = mock(Counter.class);
 
-        when(stubCounter.getTurnNumber()).thenReturn(10);
+        int numberOfBoxesPlus1 = 10;
+        when(stubCounter.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
         when(stubBoard.get(anyInt())).thenReturn("");
 
         TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubCounter);
@@ -144,6 +146,6 @@ public class TicTacToeControllerTest {
 
         Integer playAgainMessage = (Integer) mav.getModel().get("turnNumber");
 
-        assertThat(playAgainMessage, is(10));
+        assertThat(playAgainMessage, is(numberOfBoxesPlus1));
     }
 }
