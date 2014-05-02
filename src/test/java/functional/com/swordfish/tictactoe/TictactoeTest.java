@@ -2,6 +2,7 @@ package functional.com.swordfish.tictactoe;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -154,5 +155,44 @@ public class TicTacToeTest {
         inputField.sendKeys(Integer.toString(playerMoveInput));
 
         driver.findElement(By.id("move-button")).click();
+    }
+
+    @Ignore("WIP #6 | Kyle and Beverly | working on implementing winner")
+    @Test
+    public void shouldDeclarePlayer1TheWinner() throws Exception {
+        WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("1");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("4");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("2");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("5");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("3");
+
+        driver.findElement(By.id("move-button")).click();
+
+        WebElement winner = driver.findElement(By.id("winner"));
+
+        assertThat(winner.getText(), containsString("Player 1"));
+
     }
 }

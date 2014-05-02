@@ -14,7 +14,11 @@
                 <input type="text" id="player-move-input" name="player-move-input-name" />
                 <button type="submit" id="move-button">Submit</button>
             </form>
-            <div id="error-message" th:text="${errors}"></div>
+            <div id="error-message" th:text="${errors}">Errors will be displayed here.</div>
+
+            <!--TODO: #6 | Kyle and Beverly | working on implementing winner story-->
+            <!--<span id="winner" th:if="${winner} != ''" th:text="' wins!'"></span>-->
+
             <div th:if="${turnNumber == 10}" id="play-again-message">Game over. <a href="/" id="play-again-link">Play again?</a></div>
         </div>
         <table id="game-board">
