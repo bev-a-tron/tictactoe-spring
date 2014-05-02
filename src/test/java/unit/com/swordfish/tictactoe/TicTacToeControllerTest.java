@@ -41,7 +41,7 @@ public class TicTacToeControllerTest {
         String playerMoveInput = "1";
         ticTacToeController.makeMove(playerMoveInput);
 
-        assertThat(board.get(0), is("x"));
+        assertThat(board.get(0), is(PLAYER_1_SYMBOL));
     }
 
     @Test
