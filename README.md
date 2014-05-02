@@ -5,7 +5,7 @@ Beach project
 By Team Swordfish  
 
 To run:  
-./gradlew build  
+./gradlew assemble  
 ./gradlew run  
   
 Then navigate to:  
