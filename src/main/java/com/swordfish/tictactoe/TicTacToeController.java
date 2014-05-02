@@ -11,14 +11,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class TicTacToeController {
 
     Board board;
+    Counter counter;
 
     @Autowired
-    public TicTacToeController(Board board) {
+    public TicTacToeController(Board board, Counter counter) {
         this.board = board;
+        this.counter = counter;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showBoard() {
+        this.board = new Board();
+        this.counter = new Counter();
         return "tictactoe";
     }
 
@@ -30,12 +34,15 @@ public class TicTacToeController {
 
         if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
-            board.put(boxToBeUpdatedIndex);
+            String symbol = getSymbol(counter.getTurnNumber());
+            board.put(boxToBeUpdatedIndex, symbol);
+            counter.increment();
         }
 
         ModelAndView mav = new ModelAndView("tictactoe");
 
         mav.addObject("errors", error);
+        mav.addObject("turnNumber", counter.getTurnNumber());
         mav.addObject("box1", board.get(0));
         mav.addObject("box2", board.get(1));
         mav.addObject("box3", board.get(2));
@@ -49,28 +56,39 @@ public class TicTacToeController {
         return mav;
     }
 
-    private String getError(String playerMoveInputName) {
-        boolean integerInput = validateIntegerInput(playerMoveInputName);
-        String error = "";
-        if (integerInput) {
-            if (!isInRange(playerMoveInputName)){
-                error = "Number out of range.  Please enter a number between 1 and 9.";
-            }
+    private String getSymbol(int turnNumber) {
+        if (turnNumber % 2 == 1) {
+            return "x";
         } else {
-            error = "Words are not allowed. Please enter a number between 1 and 9.";
+            return "o";
         }
+    }
+
+    private String getError(String playerMoveInputName) {
+        String error = "";
+
+        if (!isInteger(playerMoveInputName)) {
+            error = "Words are not allowed. Please enter a number between 1 and 9.";
+        } else if (!isInRange(playerMoveInputName)) {
+            error = "Number out of range. Please enter a number between 1 and 9.";
+        } else if (!isAvailable(playerMoveInputName)) {
+            error = "You can't go there. Choose again.";
+        }
+
         return error;
+    }
+
+    private boolean isAvailable(String playerMoveInputName) {
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+        return board.get(boxToBeUpdatedIndex).equals("");
     }
 
     private boolean isInRange(String playerMoveInputName) {
         int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
-        if ((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8)) {
-            return false;
-        }
-        return true;
+        return !((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8));
     }
 
-    private boolean validateIntegerInput(String input) {
+    private boolean isInteger(String input) {
         try {
             Integer.parseInt(input);
         } catch (NumberFormatException numberFormat) {

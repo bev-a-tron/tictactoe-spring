@@ -11,7 +11,11 @@ public class Board {
         return boxes[index];
     }
 
-    public void put(int boxToBeUpdatedIndex) {
-        boxes[boxToBeUpdatedIndex] = "x";
+    public void put(int boxToBeUpdatedIndex, String symbol) {
+        boxes[boxToBeUpdatedIndex] = symbol;
+    }
+
+    public boolean contains(boolean integerInput) {
+        return false;
     }
 }
