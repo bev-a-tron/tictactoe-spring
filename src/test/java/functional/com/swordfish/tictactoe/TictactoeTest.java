@@ -2,7 +2,6 @@ package functional.com.swordfish.tictactoe;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -157,7 +156,6 @@ public class TicTacToeTest {
         driver.findElement(By.id("move-button")).click();
     }
 
-    @Ignore("WIP #6 | Kyle and Beverly | working on implementing winner")
     @Test
     public void shouldDeclarePlayer1TheWinner() throws Exception {
         WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
@@ -192,7 +190,7 @@ public class TicTacToeTest {
 
         WebElement winner = driver.findElement(By.id("winner"));
 
-        assertThat(winner.getText(), containsString("Player 1"));
+        assertThat(winner.getText(), containsString("x"));
 
     }
 }

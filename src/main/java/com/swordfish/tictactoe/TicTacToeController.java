@@ -22,11 +22,16 @@ public class TicTacToeController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showBoard() {
+    public ModelAndView showBoard() {
         this.board = new Board();
         this.counter = new Counter();
         this.gameManager = new GameManager();
-        return "tictactoe";
+
+        ModelAndView mav = new ModelAndView("tictactoe");
+        String winner = "";
+        mav.addObject("winner", winner);
+
+        return mav;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
