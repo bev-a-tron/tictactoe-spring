@@ -10,20 +10,28 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TicTacToeController {
 
+    GameManager gameManager;
     Board board;
     Counter counter;
 
     @Autowired
-    public TicTacToeController(Board board, Counter counter) {
+    public TicTacToeController(Board board, Counter counter, GameManager gameManager) {
         this.board = board;
         this.counter = counter;
+        this.gameManager = gameManager;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showBoard() {
+    public ModelAndView showBoard() {
         this.board = new Board();
         this.counter = new Counter();
-        return "tictactoe";
+        this.gameManager = new GameManager();
+
+        ModelAndView mav = new ModelAndView("tictactoe");
+        String winner = "";
+        mav.addObject("winner", winner);
+
+        return mav;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
@@ -32,10 +40,12 @@ public class TicTacToeController {
 
         String error = getError(playerMoveInputName);
 
+        String winner = "";
         if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
             String symbol = getSymbol(counter.getTurnNumber());
             board.put(boxToBeUpdatedIndex, symbol);
+            winner = gameManager.whoIsTheWinner(board);
             counter.increment();
         }
 
@@ -43,6 +53,7 @@ public class TicTacToeController {
 
         mav.addObject("errors", error);
         mav.addObject("turnNumber", counter.getTurnNumber());
+        mav.addObject("winner", winner);
         mav.addObject("box1", board.get(0));
         mav.addObject("box2", board.get(1));
         mav.addObject("box3", board.get(2));

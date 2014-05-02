@@ -155,4 +155,42 @@ public class TicTacToeTest {
 
         driver.findElement(By.id("move-button")).click();
     }
+
+    @Test
+    public void shouldDeclarePlayer1TheWinner() throws Exception {
+        WebElement playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("1");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("4");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("2");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("5");
+
+        driver.findElement(By.id("move-button")).click();
+
+        playerMoveInput = driver.findElement(By.id("player-move-input"));
+        playerMoveInput.clear();
+        playerMoveInput.sendKeys("3");
+
+        driver.findElement(By.id("move-button")).click();
+
+        WebElement winner = driver.findElement(By.id("winner"));
+
+        assertThat(winner.getText(), containsString("x"));
+
+    }
 }
