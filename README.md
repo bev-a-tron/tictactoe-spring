@@ -2,7 +2,7 @@ tictactoe-spring
 ================
 
 Beach project  
-By Team Swordfish (AKA Eliza, Kyle, and Beverly)
+By Team Swordfish
 
 To run:  
 ./gradlew assemble  
