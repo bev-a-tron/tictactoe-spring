@@ -192,5 +192,9 @@ public class TicTacToeTest {
 
         assertThat(winner.getText(), containsString("x"));
 
+        WebElement playAgainMessage = driver.findElement(By.id("play-again-message"));
+
+        assertThat(playAgainMessage.getText(), containsString("Play again?"));
+
     }
 }
