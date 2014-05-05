@@ -25,7 +25,7 @@ public class GameManagerTest {
 
         String winner = gameManager.whoIsTheWinner(stubBoard);
 
-        assertThat(winner, is("x"));
+        assertThat(winner, is("X"));
 
     }
 

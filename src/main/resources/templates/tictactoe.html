@@ -9,11 +9,9 @@
     </head>
     <body>
         <div id="header">
-            <div id="error-message" th:text="${errors}">Errors will be displayed here.</div>
+            <div id="winner" class="message" th:if="${winner} != ''" th:text="${winner} + ' wins!'">Beverly wins!</div>
 
-            <span id="winner" th:if="${winner} != ''" th:text="${winner} + ' wins!'"></span>
-
-            <div th:if="${turnNumber == 10} or ${winner} != ''" id="play-again-message">Game over. <a href="/" id="play-again-link">Play again?</a></div>
+            <div th:if="${turnNumber == 10} or ${winner} != ''" class="message" id="play-again-message">Game over. <a href="/" id="play-again-link">Play again?</a></div>
         </div>
         <table id="game-board">
             <tr>

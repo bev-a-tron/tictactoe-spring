@@ -16,13 +16,21 @@
     width: 100%;
 }
 
+.message {
+    text-align: center;
+}
+
+#winner {
+    font-size: 24pt;
+}
+
 #game-board {
     margin-left:auto;
     margin-right:auto;
 }
 
 #header {
-    height: 50px;
+    height: 70px;
 }
 
 .square {
