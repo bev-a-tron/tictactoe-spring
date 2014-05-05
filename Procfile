@@ -1,0 +1,1 @@
+web: java -jar tic-tac-toe-0.1.0.jar
