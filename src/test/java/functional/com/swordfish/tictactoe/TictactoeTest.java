@@ -67,8 +67,9 @@ public class TicTacToeTest {
     @Test
     public void shouldDisplayMessageWhenBoardIsFull() throws Exception {
 
-        for (int playerMoveInput = 1; playerMoveInput < 10; playerMoveInput++) {
-            fillOneBox(playerMoveInput);
+        int[] playerMoveInputArray = {1, 3, 2, 4, 6, 5, 7, 8, 9};
+        for (int playerMoveInput = 0; playerMoveInput < 9; playerMoveInput++) {
+            fillOneBox(playerMoveInputArray[playerMoveInput]);
         }
 
         WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
