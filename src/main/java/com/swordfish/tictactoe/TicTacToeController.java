@@ -31,13 +31,22 @@ public class TicTacToeController {
         String winner = "";
         mav.addObject("winner", winner);
 
+        mav.addObject("box1", board.get(0));
+        mav.addObject("box2", board.get(1));
+        mav.addObject("box3", board.get(2));
+        mav.addObject("box4", board.get(3));
+        mav.addObject("box5", board.get(4));
+        mav.addObject("box6", board.get(5));
+        mav.addObject("box7", board.get(6));
+        mav.addObject("box8", board.get(7));
+        mav.addObject("box9", board.get(8));
+
         return mav;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public ModelAndView makeMove(
-            @RequestParam(value = "player-move-input-name", required = false) String playerMoveInputName) {
-
+            @RequestParam(value = "box-input", required = false) String playerMoveInputName) {
         String error = getError(playerMoveInputName);
 
         String winner = "";

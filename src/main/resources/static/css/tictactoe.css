@@ -1,3 +1,21 @@
+.box-input {
+    -webkit-appearance: none;
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    cursor: default;
+    outline: 0;
+}
+
+.big {
+    -webkit-appearance: none;
+    height: 100%;
+    width: 100%;
+}
+
 #game-board {
     margin-left:auto;
     margin-right:auto;
