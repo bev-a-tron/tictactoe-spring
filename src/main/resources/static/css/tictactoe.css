@@ -1,10 +1,36 @@
+.box-input {
+    -webkit-appearance: none;
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: transparent;
+    background-color: transparent;
+    border-color: transparent;
+    cursor: default;
+    outline: 0;
+}
+
+.big {
+    -webkit-appearance: none;
+    height: 100%;
+    width: 100%;
+}
+
+.message {
+    text-align: center;
+}
+
+#winner {
+    font-size: 24pt;
+}
+
 #game-board {
     margin-left:auto;
     margin-right:auto;
 }
 
 #header {
-    height: 50px;
+    height: 70px;
 }
 
 .square {

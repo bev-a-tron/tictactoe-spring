@@ -7,6 +7,7 @@ public class GameManager {
 
     public String whoIsTheWinner(Board board) {
 
+        String winner = "";
         String box1 = board.get(0);
         String box2 = board.get(1);
         String box3 = board.get(2);
@@ -18,23 +19,23 @@ public class GameManager {
         String box9 = board.get(8);
 
         if (areBoxesEqual(box1, box2, box3)) {
-            return box1;
+            winner = box1;
         } else if (areBoxesEqual(box4, box5, box6)) {
-            return box4;
+            winner = box4;
         } else if (areBoxesEqual(box7, box8, box9)) {
-            return box7;
+            winner = box7;
         } else if (areBoxesEqual(box1, box4, box7)) {
-            return box1;
+            winner = box1;
         } else if (areBoxesEqual(box2, box5, box8)) {
-            return box2;
+            winner = box2;
         } else if (areBoxesEqual(box3, box6, box9)) {
-            return box3;
+            winner = box3;
         } else if (areBoxesEqual(box1, box5, box9)) {
-            return box1;
+            winner = box1;
         } else if (areBoxesEqual(box3, box5, box7)) {
-            return box3;
+            winner = box3;
         }
-        return "";
+        return winner.toUpperCase();
     }
 
     private boolean areBoxesEqual(String box1, String box2, String box3) {

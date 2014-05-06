@@ -1,3 +1,5 @@
+defaultTasks = ["clean", "assemble"]
+
 buildscript {
     repositories {
         maven { url "http://repo.spring.io/libs-milestone" }
@@ -14,8 +16,8 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 jar {
-    baseName = 'tic-tac-toe'
-    version = '0.1.0'
+    baseName = 'tictactoe'
+    version = '1'
 }
 
 repositories {
@@ -34,3 +36,5 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
+
+task stage(dependsOn: ['assemble'])
