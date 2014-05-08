@@ -55,7 +55,6 @@ public class TicTacToeController {
             status = winner + " wins!";
         }
 
-
         ModelAndView mav = new ModelAndView("tictactoe");
 
         mav.addObject("errors", error);

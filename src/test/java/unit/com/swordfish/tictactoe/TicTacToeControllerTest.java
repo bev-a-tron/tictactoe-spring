@@ -88,8 +88,9 @@ public class TicTacToeControllerTest {
         GameManager stubGameManager = mock(GameManager.class);
         Counter mockCounter = mock(Counter.class);
         String validPlayerMoveInput = "1";
-
         TicTacToeController anotherTicTacToeController = new TicTacToeController(board, mockCounter, stubGameManager);
+
+        when(stubGameManager.whoIsTheWinner(board)).thenReturn("");
 
         anotherTicTacToeController.makeMove(validPlayerMoveInput);
 
@@ -109,6 +110,7 @@ public class TicTacToeControllerTest {
         int secondPlayerTurnNumber = 2;
         when(mockCounter.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
         when(mockBoard.get(anyInt())).thenReturn("");
+        when(stubGameManager.whoIsTheWinner(mockBoard)).thenReturn("");
 
         anotherTicTacToeController.makeMove(playerMove);
 
@@ -136,14 +138,15 @@ public class TicTacToeControllerTest {
         int numberOfBoxesPlus1 = 10;
         when(stubCounter.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
         when(stubBoard.get(anyInt())).thenReturn("");
+        when(stubGameManager.whoIsTheWinner(stubBoard)).thenReturn("");
 
         TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubCounter, stubGameManager);
         String playerMove = "9";
         ModelAndView mav = anotherTicTacToeController.makeMove(playerMove);
 
-        Integer playAgainMessage = (Integer) mav.getModel().get("turnNumber");
+        Integer numberOfTurns = (Integer) mav.getModel().get("turnNumber");
 
-        assertThat(playAgainMessage, is(numberOfBoxesPlus1));
+        assertThat(numberOfTurns, is(numberOfBoxesPlus1));
     }
 
     @Test
