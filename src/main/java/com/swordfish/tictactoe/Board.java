@@ -15,7 +15,4 @@ public class Board {
         boxes[boxToBeUpdatedIndex] = symbol;
     }
 
-    public boolean contains(boolean integerInput) {
-        return false;
-    }
 }
