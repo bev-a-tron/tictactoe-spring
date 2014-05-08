@@ -25,7 +25,7 @@ public class TicTacToeController {
     public ModelAndView showBoard() {
         this.board = new Board();
         this.counter = new Counter();
-        this.gameManager = new GameManager();
+        this.gameManager = new GameManager(board);
 
         ModelAndView mav = new ModelAndView("tictactoe");
         mav.addObject("gameStatus", gameManager.statusMessage());
@@ -44,7 +44,7 @@ public class TicTacToeController {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
             String symbol = getSymbol(counter.getTurnNumber());
             board.put(boxToBeUpdatedIndex, symbol);
-            winner = gameManager.whoIsTheWinner(board);
+            winner = gameManager.whoIsTheWinner();
             counter.increment();
         }
 

@@ -1,11 +1,19 @@
 package com.swordfish.tictactoe;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GameManager {
 
-    public String whoIsTheWinner(Board board) {
+    private Board board;
+
+    @Autowired
+    public GameManager(Board board) {
+        this.board = board;
+    }
+
+    public String whoIsTheWinner() {
 
         String winner = "";
         String box1 = board.get(0);

@@ -29,7 +29,7 @@ public class TicTacToeControllerTest {
     public TicTacToeControllerTest() {
         board = new Board();
         counter = new Counter();
-        gameManager = new GameManager();
+        gameManager = new GameManager(board);
     }
 
     @Before
@@ -90,7 +90,7 @@ public class TicTacToeControllerTest {
         String validPlayerMoveInput = "1";
         TicTacToeController anotherTicTacToeController = new TicTacToeController(board, mockCounter, stubGameManager);
 
-        when(stubGameManager.whoIsTheWinner(board)).thenReturn("");
+        when(stubGameManager.whoIsTheWinner()).thenReturn("");
 
         anotherTicTacToeController.makeMove(validPlayerMoveInput);
 
@@ -110,7 +110,7 @@ public class TicTacToeControllerTest {
         int secondPlayerTurnNumber = 2;
         when(mockCounter.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
         when(mockBoard.get(anyInt())).thenReturn("");
-        when(stubGameManager.whoIsTheWinner(mockBoard)).thenReturn("");
+        when(stubGameManager.whoIsTheWinner()).thenReturn("");
 
         anotherTicTacToeController.makeMove(playerMove);
 
@@ -138,7 +138,7 @@ public class TicTacToeControllerTest {
         int numberOfBoxesPlus1 = 10;
         when(stubCounter.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
         when(stubBoard.get(anyInt())).thenReturn("");
-        when(stubGameManager.whoIsTheWinner(stubBoard)).thenReturn("");
+        when(stubGameManager.whoIsTheWinner()).thenReturn("");
 
         TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubCounter, stubGameManager);
         String playerMove = "9";
@@ -159,7 +159,7 @@ public class TicTacToeControllerTest {
         int turnNumber = 6;
         when(stubCounter.getTurnNumber()).thenReturn(turnNumber);
         when(stubBoard.get(turnNumber - 1)).thenReturn("");
-        when(stubGameManager.whoIsTheWinner(stubBoard)).thenReturn("x");
+        when(stubGameManager.whoIsTheWinner()).thenReturn("x");
 
         String minimumMovesToWin = "6";
         ModelAndView mav = anotherTicTacToeController.makeMove(minimumMovesToWin);

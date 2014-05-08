@@ -2,6 +2,7 @@ package unit.com.swordfish.tictactoe;
 
 import com.swordfish.tictactoe.Board;
 import com.swordfish.tictactoe.GameManager;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -11,20 +12,28 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class GameManagerTest {
+    Board stubBoard;
+    GameManager gameManager;
+
+    @Before
+    public void setUp() throws Exception {
+
+        stubBoard = mock(Board.class);
+        gameManager = new GameManager(stubBoard);
+
+    }
 
     @Test
     public void shouldCheckIfGameIsOverWhenSomebodyGets3InARow() throws Exception {
 
-        Board stubBoard = mock(Board.class);
 
         //TODO: Concept missing
         when(stubBoard.get(0)).thenReturn("x");
         when(stubBoard.get(1)).thenReturn("x");
         when(stubBoard.get(2)).thenReturn("x");
 
-        GameManager gameManager = new GameManager();
 
-        String winner = gameManager.whoIsTheWinner(stubBoard);
+        String winner = gameManager.whoIsTheWinner();
 
         assertThat(winner, is("X"));
 
@@ -33,13 +42,9 @@ public class GameManagerTest {
     @Test
     public void shouldCheckIfGameIsNotOverWhenNobodyHas3InARow() throws Exception {
 
-        Board stubBoard = mock(Board.class);
-
         when(stubBoard.get(anyInt())).thenReturn("");
 
-        GameManager gameManager = new GameManager();
-
-        String winner = gameManager.whoIsTheWinner(stubBoard);
+        String winner = gameManager.whoIsTheWinner();
 
         assertThat(winner, is(""));
 
@@ -47,8 +52,6 @@ public class GameManagerTest {
 
     @Test
     public void shouldReportTurnX() throws Exception {
-
-        GameManager gameManager = new GameManager();
 
         String status = gameManager.statusMessage();
 
