@@ -28,18 +28,8 @@ public class TicTacToeController {
         this.gameManager = new GameManager();
 
         ModelAndView mav = new ModelAndView("tictactoe");
-        String winner = "";
-        mav.addObject("winner", winner);
-
-        mav.addObject("box1", board.get(0));
-        mav.addObject("box2", board.get(1));
-        mav.addObject("box3", board.get(2));
-        mav.addObject("box4", board.get(3));
-        mav.addObject("box5", board.get(4));
-        mav.addObject("box6", board.get(5));
-        mav.addObject("box7", board.get(6));
-        mav.addObject("box8", board.get(7));
-        mav.addObject("box9", board.get(8));
+        mav.addObject("gameStatus", gameManager.statusMessage());
+        mav.addObject("board", board);
 
         return mav;
     }
@@ -58,20 +48,20 @@ public class TicTacToeController {
             counter.increment();
         }
 
+        String status = "";
+        if (winner.equals("")) {
+            status = gameManager.statusMessage();
+        } else {
+            status = winner + " wins!";
+        }
+
+
         ModelAndView mav = new ModelAndView("tictactoe");
 
         mav.addObject("errors", error);
         mav.addObject("turnNumber", counter.getTurnNumber());
-        mav.addObject("winner", winner);
-        mav.addObject("box1", board.get(0));
-        mav.addObject("box2", board.get(1));
-        mav.addObject("box3", board.get(2));
-        mav.addObject("box4", board.get(3));
-        mav.addObject("box5", board.get(4));
-        mav.addObject("box6", board.get(5));
-        mav.addObject("box7", board.get(6));
-        mav.addObject("box8", board.get(7));
-        mav.addObject("box9", board.get(8));
+        mav.addObject("gameStatus", status);
+        mav.addObject("board", board);
 
         return mav;
     }

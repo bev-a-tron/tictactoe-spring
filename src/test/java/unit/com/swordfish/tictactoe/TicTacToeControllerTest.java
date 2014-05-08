@@ -54,15 +54,7 @@ public class TicTacToeControllerTest {
         ModelAndView mav = ticTacToeController.makeMove(playerMoveInput);
 
         assertEquals("tictactoe", mav.getViewName());
-        assertTrue(mav.getModel().containsKey("box1"));
-        assertTrue(mav.getModel().containsKey("box2"));
-        assertTrue(mav.getModel().containsKey("box3"));
-        assertTrue(mav.getModel().containsKey("box4"));
-        assertTrue(mav.getModel().containsKey("box5"));
-        assertTrue(mav.getModel().containsKey("box6"));
-        assertTrue(mav.getModel().containsKey("box7"));
-        assertTrue(mav.getModel().containsKey("box8"));
-        assertTrue(mav.getModel().containsKey("box9"));
+        assertTrue(mav.getModel().containsKey("board"));
     }
 
     @Test
@@ -169,7 +161,7 @@ public class TicTacToeControllerTest {
         String minimumMovesToWin = "6";
         ModelAndView mav = anotherTicTacToeController.makeMove(minimumMovesToWin);
 
-        String winner = (String) mav.getModel().get("winner");
-        assertThat(winner, containsString("x"));
+        String winner = (String) mav.getModel().get("gameStatus");
+        assertThat(winner, containsString("x wins!"));
     }
 }

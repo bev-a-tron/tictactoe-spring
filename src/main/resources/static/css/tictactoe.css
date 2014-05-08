@@ -16,8 +16,13 @@
     width: 100%;
 }
 
+#title {
+    font-size: 18pt;
+}
+
 .message {
     text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #winner {
@@ -30,7 +35,7 @@
 }
 
 #header {
-    height: 70px;
+    height: 90px;
 }
 
 .square {

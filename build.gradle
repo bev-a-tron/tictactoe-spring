@@ -38,3 +38,5 @@ task wrapper(type: Wrapper) {
 }
 
 task stage(dependsOn: ['assemble'])
+
+task go(dependsOn: ['assemble', 'run'])

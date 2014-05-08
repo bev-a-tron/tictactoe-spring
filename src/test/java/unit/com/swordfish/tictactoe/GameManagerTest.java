@@ -17,6 +17,7 @@ public class GameManagerTest {
 
         Board stubBoard = mock(Board.class);
 
+        //TODO: Concept missing
         when(stubBoard.get(0)).thenReturn("x");
         when(stubBoard.get(1)).thenReturn("x");
         when(stubBoard.get(2)).thenReturn("x");
@@ -44,4 +45,14 @@ public class GameManagerTest {
 
     }
 
+    @Test
+    public void shouldReportTurnX() throws Exception {
+
+        GameManager gameManager = new GameManager();
+
+        String status = gameManager.statusMessage();
+
+        assertThat(status, is("X, it's your turn!"));
+
+    }
 }

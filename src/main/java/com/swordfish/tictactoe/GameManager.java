@@ -42,4 +42,7 @@ public class GameManager {
         return box1.equals(box2) && box2.equals(box3) && !box1.equals("");
     }
 
+    public String statusMessage() {
+        return "X, it's your turn!";
+    }
 }

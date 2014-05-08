@@ -117,7 +117,7 @@ public class TicTacToeTest {
         driver.findElement(By.id("box5-button")).click();
         driver.findElement(By.id("box3-button")).click();
 
-        WebElement winner = driver.findElement(By.id("winner"));
+        WebElement winner = driver.findElement(By.id("game-status"));
 
         assertThat(winner.getText(), containsString("X"));
 
