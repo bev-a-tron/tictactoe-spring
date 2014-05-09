@@ -10,8 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TicTacToeController {
 
-    GameManager gameManager;
-    Board board;
+    private GameManager gameManager;
+    private Board board;
 
     @Autowired
     public TicTacToeController(Board board, GameManager gameManager) {
@@ -45,21 +45,22 @@ public class TicTacToeController {
             gameManager.increment();
         }
 
-        String status = "";
-        if (winner.equals("")) {
-            status = gameManager.statusMessage();
-        } else {
-            status = winner + " wins!";
-        }
-
         ModelAndView mav = new ModelAndView("tictactoe");
 
         mav.addObject("errors", error);
         mav.addObject("turnNumber", gameManager.getTurnNumber());
-        mav.addObject("gameStatus", status);
+        mav.addObject("gameStatus", gameStatus(winner));
         mav.addObject("board", board);
 
         return mav;
+    }
+
+    private String gameStatus(String winner) {
+        if (winner.equals("")) {
+            return gameManager.statusMessage();
+        } else {
+            return winner + " wins!";
+        }
     }
 
     private String getError(String playerMoveInputName) {
