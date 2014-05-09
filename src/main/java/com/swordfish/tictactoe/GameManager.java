@@ -6,11 +6,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameManager {
 
+    private int turnNumber = 1;
     private Board board;
 
     @Autowired
     public GameManager(Board board) {
         this.board = board;
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+
+    public void increment() {
+        turnNumber++;
     }
 
     public String whoIsTheWinner() {
@@ -51,6 +60,15 @@ public class GameManager {
     }
 
     public String statusMessage() {
-        return "X, it's your turn!";
+
+        return getSymbol().toUpperCase() + ", it's your turn!";
+    }
+
+    public String getSymbol() {
+        if (turnNumber % 2 == 1) {
+            return "x";
+        } else {
+            return "o";
+        }
     }
 }

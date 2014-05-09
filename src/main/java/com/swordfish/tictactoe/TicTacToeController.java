@@ -12,19 +12,16 @@ public class TicTacToeController {
 
     GameManager gameManager;
     Board board;
-    Counter counter;
 
     @Autowired
-    public TicTacToeController(Board board, Counter counter, GameManager gameManager) {
+    public TicTacToeController(Board board, GameManager gameManager) {
         this.board = board;
-        this.counter = counter;
         this.gameManager = gameManager;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showBoard() {
         this.board = new Board();
-        this.counter = new Counter();
         this.gameManager = new GameManager(board);
 
         ModelAndView mav = new ModelAndView("tictactoe");
@@ -42,10 +39,10 @@ public class TicTacToeController {
         String winner = "";
         if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
-            String symbol = getSymbol(counter.getTurnNumber());
+            String symbol = gameManager.getSymbol();
             board.put(boxToBeUpdatedIndex, symbol);
             winner = gameManager.whoIsTheWinner();
-            counter.increment();
+            gameManager.increment();
         }
 
         String status = "";
@@ -58,19 +55,11 @@ public class TicTacToeController {
         ModelAndView mav = new ModelAndView("tictactoe");
 
         mav.addObject("errors", error);
-        mav.addObject("turnNumber", counter.getTurnNumber());
+        mav.addObject("turnNumber", gameManager.getTurnNumber());
         mav.addObject("gameStatus", status);
         mav.addObject("board", board);
 
         return mav;
-    }
-
-    private String getSymbol(int turnNumber) {
-        if (turnNumber % 2 == 1) {
-            return "x";
-        } else {
-            return "o";
-        }
     }
 
     private String getError(String playerMoveInputName) {

@@ -1,7 +1,6 @@
 package unit.com.swordfish.tictactoe;
 
 import com.swordfish.tictactoe.Board;
-import com.swordfish.tictactoe.Counter;
 import com.swordfish.tictactoe.GameManager;
 import com.swordfish.tictactoe.TicTacToeController;
 import org.junit.Before;
@@ -21,21 +20,19 @@ public class TicTacToeControllerTest {
     private static final String PLAYER_2_SYMBOL="o";
     private static final String PLAYER_1_SYMBOL="x";
     Board board;
-    Counter counter;
     GameManager gameManager;
 
     TicTacToeController ticTacToeController;
 
     public TicTacToeControllerTest() {
         board = new Board();
-        counter = new Counter();
         gameManager = new GameManager(board);
     }
 
     @Before
     public void setUp() throws Exception {
 
-        ticTacToeController = new TicTacToeController(board, counter, gameManager);
+        ticTacToeController = new TicTacToeController(board, gameManager);
     }
 
     @Test
@@ -86,31 +83,30 @@ public class TicTacToeControllerTest {
     @Test
     public void shouldTellCounterToIncrementWhenPlayerMovesSuccessfully() throws Exception {
         GameManager stubGameManager = mock(GameManager.class);
-        Counter mockCounter = mock(Counter.class);
         String validPlayerMoveInput = "1";
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(board, mockCounter, stubGameManager);
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(board, stubGameManager);
 
         when(stubGameManager.whoIsTheWinner()).thenReturn("");
 
         anotherTicTacToeController.makeMove(validPlayerMoveInput);
 
-        verify(mockCounter).increment();
+        verify(stubGameManager).increment();
 
     }
 
     @Test
     public void shouldPutOIntoBoardWhenPlayer2Turn() throws Exception {
-        Counter mockCounter = mock(Counter.class);
         Board mockBoard = mock(Board.class);
         GameManager stubGameManager = mock(GameManager.class);
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(mockBoard, mockCounter, stubGameManager);
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(mockBoard, stubGameManager);
         String playerMove = "3";
         int playerMoveIndex = Integer.parseInt(playerMove) - 1;
 
         int secondPlayerTurnNumber = 2;
-        when(mockCounter.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
+        when(stubGameManager.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
         when(mockBoard.get(anyInt())).thenReturn("");
         when(stubGameManager.whoIsTheWinner()).thenReturn("");
+        when(stubGameManager.getSymbol()).thenReturn(PLAYER_2_SYMBOL);
 
         anotherTicTacToeController.makeMove(playerMove);
 
@@ -132,15 +128,14 @@ public class TicTacToeControllerTest {
     @Test
     public void shouldAddEndOfGameMessageToModel() throws Exception {
         Board stubBoard = mock(Board.class);
-        Counter stubCounter = mock(Counter.class);
         GameManager stubGameManager = mock(GameManager.class);
 
         int numberOfBoxesPlus1 = 10;
-        when(stubCounter.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
+        when(stubGameManager.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
         when(stubBoard.get(anyInt())).thenReturn("");
         when(stubGameManager.whoIsTheWinner()).thenReturn("");
 
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubCounter, stubGameManager);
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
         String playerMove = "9";
         ModelAndView mav = anotherTicTacToeController.makeMove(playerMove);
 
@@ -152,12 +147,11 @@ public class TicTacToeControllerTest {
     @Test
     public void shouldAddWinningMessageToModel() throws Exception {
         Board stubBoard = mock(Board.class);
-        Counter stubCounter = mock(Counter.class);
         GameManager stubGameManager = mock(GameManager.class);
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubCounter, stubGameManager);
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
 
         int turnNumber = 6;
-        when(stubCounter.getTurnNumber()).thenReturn(turnNumber);
+        when(stubGameManager.getTurnNumber()).thenReturn(turnNumber);
         when(stubBoard.get(turnNumber - 1)).thenReturn("");
         when(stubGameManager.whoIsTheWinner()).thenReturn("x");
 
