@@ -38,20 +38,20 @@ public class TicTacToeTest {
     @Test
     public void shouldMarkBoard() throws Exception {
 
-        driver.findElement(By.id("box1-button")).click();
+        driver.findElement(By.id("box0-button")).click();
 
-        WebElement box1 = driver.findElement(By.id("box1"));
-        assertThat(box1.getText().toLowerCase(), is("x"));
+        WebElement box0 = driver.findElement(By.id("box0"));
+        assertThat(box0.getText().toLowerCase(), is("x"));
     }
 
     @Test
     public void shouldMarkBoardWithO() throws Exception {
 
+        driver.findElement(By.id("box0-button")).click();
         driver.findElement(By.id("box1-button")).click();
-        driver.findElement(By.id("box2-button")).click();
 
-        WebElement box1 = driver.findElement(By.id("box1"));
-        WebElement box2 = driver.findElement(By.id("box2"));
+        WebElement box1 = driver.findElement(By.id("box0"));
+        WebElement box2 = driver.findElement(By.id("box1"));
         assertThat(box1.getText().toLowerCase(), is("x"));
         assertThat(box2.getText().toLowerCase(), is("o"));
     }
@@ -59,15 +59,16 @@ public class TicTacToeTest {
     @Test(expected = NoSuchElementException.class)
     public void shouldNotLetPlayerChooseBoxThatIsTaken() throws Exception {
 
-        driver.findElement(By.id("box1-button")).click();
-        driver.findElement(By.id("box1-button"));
+        driver.findElement(By.id("box0-button")).click();
+        driver.findElement(By.id("box0-button"));
 
     }
 
     @Test
     public void shouldDisplayMessageWhenBoardIsFull() throws Exception {
 
-        int[] playerMoveInputArray = {1, 3, 2, 4, 6, 5, 7, 8, 9};
+        //TODO: This is ugly
+        int[] playerMoveInputArray = {0, 1, 2, 4, 3, 5, 7, 6, 8};
         for (int playerMoveInput = 0; playerMoveInput < 9; playerMoveInput++) {
             fillOneBox(playerMoveInputArray[playerMoveInput]);
         }
@@ -80,6 +81,7 @@ public class TicTacToeTest {
 
         playAgainLink.click();
 
+        WebElement box0 = driver.findElement(By.id("box0"));
         WebElement box1 = driver.findElement(By.id("box1"));
         WebElement box2 = driver.findElement(By.id("box2"));
         WebElement box3 = driver.findElement(By.id("box3"));
@@ -88,8 +90,8 @@ public class TicTacToeTest {
         WebElement box6 = driver.findElement(By.id("box6"));
         WebElement box7 = driver.findElement(By.id("box7"));
         WebElement box8 = driver.findElement(By.id("box8"));
-        WebElement box9 = driver.findElement(By.id("box9"));
 
+        assertThat(box0.getText().toLowerCase(), is(""));
         assertThat(box1.getText().toLowerCase(), is(""));
         assertThat(box2.getText().toLowerCase(), is(""));
         assertThat(box3.getText().toLowerCase(), is(""));
@@ -98,7 +100,6 @@ public class TicTacToeTest {
         assertThat(box6.getText().toLowerCase(), is(""));
         assertThat(box7.getText().toLowerCase(), is(""));
         assertThat(box8.getText().toLowerCase(), is(""));
-        assertThat(box9.getText().toLowerCase(), is(""));
 
 
     }
@@ -111,11 +112,11 @@ public class TicTacToeTest {
     @Test
     public void shouldDeclarePlayer1TheWinner() throws Exception {
 
+        driver.findElement(By.id("box0-button")).click();
+        driver.findElement(By.id("box3-button")).click();
         driver.findElement(By.id("box1-button")).click();
         driver.findElement(By.id("box4-button")).click();
         driver.findElement(By.id("box2-button")).click();
-        driver.findElement(By.id("box5-button")).click();
-        driver.findElement(By.id("box3-button")).click();
 
         WebElement winner = driver.findElement(By.id("game-status"));
 
