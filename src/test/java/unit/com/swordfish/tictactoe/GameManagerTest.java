@@ -9,6 +9,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class GameManagerTest {
     Board stubBoard;
@@ -57,5 +58,27 @@ public class GameManagerTest {
 
         MatcherAssert.assertThat(gameManager.getTurnNumber(), is(3));
 
+    }
+
+    @Test
+    public void shouldTellCounterToIncrementWhenPlayerMovesSuccessfully() throws Exception {
+        String validPlayerMoveInput = "0";
+
+        gameManager.update(validPlayerMoveInput);
+
+        assertThat(gameManager.getTurnNumber(), is(2));
+    }
+
+    @Test
+    public void shouldUpdateWithCurrentPlayerSymbol() throws Exception {
+        Board board = mock(Board.class);
+
+        GameManager gameManager = new GameManager(board);
+
+        String boxToUpdate = "1";
+        gameManager.update(boxToUpdate);
+
+        assertThat(gameManager.currentPlayerSymbol(), is("o"));
+        verify(board).drawSymbolInBox(Integer.parseInt(boxToUpdate), "x");
     }
 }

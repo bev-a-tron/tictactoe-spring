@@ -42,7 +42,7 @@ public class TicTacToeTest {
         driver.findElement(By.id("box0-button")).click();
 
         WebElement box0 = driver.findElement(By.id("box0"));
-        assertThat(box0.getText().toLowerCase(), is("x"));
+        assertThat(box0.getText(), is("x"));
     }
 
     @Test
@@ -53,8 +53,8 @@ public class TicTacToeTest {
 
         WebElement box1 = driver.findElement(By.id("box0"));
         WebElement box2 = driver.findElement(By.id("box1"));
-        assertThat(box1.getText().toLowerCase(), is("x"));
-        assertThat(box2.getText().toLowerCase(), is("o"));
+        assertThat(box1.getText(), is("x"));
+        assertThat(box2.getText(), is("o"));
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -69,9 +69,10 @@ public class TicTacToeTest {
     public void shouldDisplayMessageWhenBoardIsFull() throws Exception {
 
         //TODO: This is ugly
-        int[] playerMoveInputArray = {0, 1, 2, 4, 3, 5, 7, 6, 8};
-        for (int playerMoveInput = 0; playerMoveInput < 9; playerMoveInput++) {
-            fillOneBox(playerMoveInputArray[playerMoveInput]);
+        int[] moveSequenceToEnsureDraw = {0, 1, 2, 4, 3, 5, 7, 6, 8};
+
+        for (int move : moveSequenceToEnsureDraw) {
+            fillOneBox(move);
         }
 
         WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
@@ -92,15 +93,15 @@ public class TicTacToeTest {
         WebElement box7 = driver.findElement(By.id("box7"));
         WebElement box8 = driver.findElement(By.id("box8"));
 
-        assertThat(box0.getText().toLowerCase(), is(""));
-        assertThat(box1.getText().toLowerCase(), is(""));
-        assertThat(box2.getText().toLowerCase(), is(""));
-        assertThat(box3.getText().toLowerCase(), is(""));
-        assertThat(box4.getText().toLowerCase(), is(""));
-        assertThat(box5.getText().toLowerCase(), is(""));
-        assertThat(box6.getText().toLowerCase(), is(""));
-        assertThat(box7.getText().toLowerCase(), is(""));
-        assertThat(box8.getText().toLowerCase(), is(""));
+        assertThat(box0.getText(), is(""));
+        assertThat(box1.getText(), is(""));
+        assertThat(box2.getText(), is(""));
+        assertThat(box3.getText(), is(""));
+        assertThat(box4.getText(), is(""));
+        assertThat(box5.getText(), is(""));
+        assertThat(box6.getText(), is(""));
+        assertThat(box7.getText(), is(""));
+        assertThat(box8.getText(), is(""));
 
 
     }

@@ -34,4 +34,22 @@ public class GameManager {
             return "o";
         }
     }
+
+    public Board update(String playerMoveInputName) {
+
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName);
+        String symbol = currentPlayerSymbol();
+        board.drawSymbolInBox(boxToBeUpdatedIndex, symbol);
+        increment();
+
+        return board;
+    }
+
+    public String gameStatusMessage(String winner) {
+        if (winner.equals("")) {
+            return statusMessage();
+        } else {
+            return winner + " wins!";
+        }
+    }
 }

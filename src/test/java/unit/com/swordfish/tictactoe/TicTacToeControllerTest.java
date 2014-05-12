@@ -17,7 +17,6 @@ import static org.mockito.Mockito.*;
 
 public class TicTacToeControllerTest {
 
-    private static final String PLAYER_2_SYMBOL="o";
     private static final String PLAYER_1_SYMBOL="x";
     Board board;
     GameManager gameManager;
@@ -41,7 +40,7 @@ public class TicTacToeControllerTest {
         String playerMoveInput = "0";
         ticTacToeController.makeMove(playerMoveInput);
 
-        assertThat(board.get(0), is(PLAYER_1_SYMBOL));
+        assertThat(board.getBoxContent(0), is(PLAYER_1_SYMBOL));
     }
 
     @Test
@@ -81,34 +80,22 @@ public class TicTacToeControllerTest {
     }
 
     @Test
-    public void shouldTellCounterToIncrementWhenPlayerMovesSuccessfully() throws Exception {
-        GameManager stubGameManager = mock(GameManager.class);
-        String validPlayerMoveInput = "0";
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(board, stubGameManager);
-        when(stubGameManager.currentPlayerSymbol()).thenReturn("X");
-
-        anotherTicTacToeController.makeMove(validPlayerMoveInput);
-
-        verify(stubGameManager).increment();
-
-    }
-
-    @Test
-    public void shouldPutOIntoBoardWhenPlayer2Turn() throws Exception {
-        Board mockBoard = mock(Board.class);
-        GameManager stubGameManager = mock(GameManager.class);
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(mockBoard, stubGameManager);
+    public void shouldUpdateTheBoardAndGetTheWinner() throws Exception {
+        Board board = mock(Board.class);
+        GameManager gameManager = mock(GameManager.class);
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(board, gameManager);
         int playerMoveIndex = 2;
 
         int secondPlayerTurnNumber = 2;
-        when(stubGameManager.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
-        when(mockBoard.get(anyInt())).thenReturn("");
-        when(mockBoard.whoIsTheWinner()).thenReturn("");
-        when(stubGameManager.currentPlayerSymbol()).thenReturn(PLAYER_2_SYMBOL);
+        when(gameManager.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
+        when(gameManager.update(anyString())).thenReturn(board);
+        when(board.getBoxContent(anyInt())).thenReturn("");
+        when(board.whoIsTheWinner()).thenReturn("");
 
         anotherTicTacToeController.makeMove(Integer.toString(playerMoveIndex));
 
-        verify(mockBoard).put(playerMoveIndex, PLAYER_2_SYMBOL);
+        verify(gameManager).update(Integer.toString(playerMoveIndex));
+        verify(board, times(2)).whoIsTheWinner();
     }
 
     @Test
@@ -124,15 +111,90 @@ public class TicTacToeControllerTest {
     }
 
     @Test
+    public void shouldTellOThatItIsHisTurn() throws Exception {
+
+        String playerMoveInputName = "0";
+
+        ModelAndView mav = ticTacToeController.makeMove(playerMoveInputName);
+
+        assertThat((String) mav.getModel().get("gameStatus"), is("O, it's your turn!"));
+
+    }
+
+    @Test
+    public void shouldTellXThatItIsHisTurn() throws Exception {
+
+        String playerMoveInputName = "0";
+        String anotherPlayerMoveInputName = "1";
+
+        ticTacToeController.makeMove(playerMoveInputName);
+        ModelAndView mav = ticTacToeController.makeMove(anotherPlayerMoveInputName);
+
+        assertThat((String) mav.getModel().get("gameStatus"), is("X, it's your turn!"));
+
+    }
+
+    @Test
+    public void shouldTellXThatSheWon() throws Exception {
+
+        Board xWonBoard = new Board();
+        xWonBoard.drawSymbolInBox(0, "x");
+        xWonBoard.drawSymbolInBox(1, "x");
+
+        GameManager xWonGameManager = new GameManager(xWonBoard);
+
+        TicTacToeController xWonTicTacToeController = new TicTacToeController(xWonBoard, xWonGameManager);
+        ModelAndView mav = xWonTicTacToeController.makeMove("2");
+
+        assertThat((String) mav.getModel().get("gameStatus"), is("X wins!"));
+
+    }
+
+    @Test
+    public void shouldShowEndOfGameMessageWhen9BoxesFull() throws Exception {
+        Board fullBoard = mock(Board.class);
+
+        when(fullBoard.isFull()).thenReturn(true);
+        when(fullBoard.getBoxContent(8)).thenReturn("x");
+        when(fullBoard.whoIsTheWinner()).thenReturn("");
+        GameManager fullBoardGameManager = new GameManager(fullBoard);
+
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(fullBoard, fullBoardGameManager);
+
+        String playerMoveIndex = "8";
+
+        ModelAndView mav = anotherTicTacToeController.makeMove(playerMoveIndex);
+
+        assertThat((Boolean) mav.getModel().get("isGameOver"), is(true));
+    }
+
+    @Test
+    public void shouldNotShowEndOfGameMessageWhenBoxesAreNotFull() throws Exception {
+        Board board = mock(Board.class);
+
+        when(board.isFull()).thenReturn(false);
+        when(board.getBoxContent(anyInt())).thenReturn("x");
+        when(board.whoIsTheWinner()).thenReturn("");
+        GameManager gameManager = new GameManager(board);
+
+        TicTacToeController ticTacToeController = new TicTacToeController(board, gameManager);
+
+        String playerMoveIndex = "8";
+
+        ModelAndView mav = ticTacToeController.makeMove(playerMoveIndex);
+
+        assertThat((Boolean) mav.getModel().get("isGameOver"), is(false));
+    }
+
+    @Test
     public void shouldAddEndOfGameMessageToModel() throws Exception {
         Board stubBoard = mock(Board.class);
         GameManager stubGameManager = mock(GameManager.class);
 
         int numberOfBoxesPlus1 = 10;
         when(stubGameManager.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
-        when(stubBoard.get(anyInt())).thenReturn("");
+        when(stubBoard.getBoxContent(anyInt())).thenReturn("");
         when(stubBoard.whoIsTheWinner()).thenReturn("");
-
         TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
         String playerMoveIndex = "9";
         ModelAndView mav = anotherTicTacToeController.makeMove(playerMoveIndex);
@@ -142,22 +204,23 @@ public class TicTacToeControllerTest {
         assertThat(numberOfTurns, is(numberOfBoxesPlus1));
     }
 
-//    TODO: Refactor this test to have fewer stubs
     @Test
-    public void shouldAddWinningMessageToModel() throws Exception {
-        Board stubBoard = mock(Board.class);
-        GameManager stubGameManager = mock(GameManager.class);
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
+    public void shouldGetGameStatusMessage() throws Exception {
+        Board board = mock(Board.class);
+        GameManager gameManager = mock(GameManager.class);
+
+        TicTacToeController anotherTicTacToeController = new TicTacToeController(board, gameManager);
 
         int turnNumber = 6;
-        when(stubGameManager.getTurnNumber()).thenReturn(turnNumber);
-        when(stubBoard.get(turnNumber)).thenReturn("");
-        when(stubBoard.whoIsTheWinner()).thenReturn("x");
+        when(gameManager.getTurnNumber()).thenReturn(turnNumber);
+        when(board.getBoxContent(turnNumber)).thenReturn("");
+        when(board.whoIsTheWinner()).thenReturn("x");
+        when(gameManager.update(Integer.toString(turnNumber))).thenReturn(board);
+        when(gameManager.gameStatusMessage("x")).thenReturn("x wins!");
 
         String minimumMovesToWin = "6";
-        ModelAndView mav = anotherTicTacToeController.makeMove(minimumMovesToWin);
+        anotherTicTacToeController.makeMove(minimumMovesToWin);
 
-        String winner = (String) mav.getModel().get("gameStatus");
-        assertThat(winner, containsString("x wins!"));
+        verify(gameManager).gameStatusMessage("x");
     }
 }

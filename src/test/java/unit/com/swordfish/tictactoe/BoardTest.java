@@ -12,9 +12,9 @@ public class BoardTest {
     public void shouldCheckIfGameIsOverWhenSomebodyGets3InARow() throws Exception {
 
         Board board = new Board();
-        board.put(0, "x");
-        board.put(1, "x");
-        board.put(2, "x");
+        board.drawSymbolInBox(0, "x");
+        board.drawSymbolInBox(1, "x");
+        board.drawSymbolInBox(2, "x");
 
         String winner = board.whoIsTheWinner();
 
@@ -33,4 +33,31 @@ public class BoardTest {
 
     }
 
+    @Test
+    public void shouldCheckIfBoardIsFull() throws Exception {
+
+        Board board = new Board();
+
+        board.drawSymbolInBox(0, "x");
+        board.drawSymbolInBox(1, "x");
+        board.drawSymbolInBox(2, "x");
+        board.drawSymbolInBox(3, "x");
+        board.drawSymbolInBox(4, "x");
+        board.drawSymbolInBox(5, "x");
+        board.drawSymbolInBox(6, "x");
+        board.drawSymbolInBox(7, "x");
+        board.drawSymbolInBox(8, "x");
+
+        assertThat(board.isFull(), is(true));
+
+    }
+
+    @Test
+    public void shouldCheckIfBoardIsNotFull() throws Exception {
+
+        Board board = new Board();
+
+        assertThat(board.isFull(), is(false));
+
+    }
 }
