@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class GameManager {
 
     private int turnNumber = 1;
-    private Board board;
+    public Board board;
 
     @Autowired
     public GameManager(Board board) {
@@ -22,49 +22,12 @@ public class GameManager {
         turnNumber++;
     }
 
-    public String whoIsTheWinner() {
-
-        String winner = "";
-        String box1 = board.get(0);
-        String box2 = board.get(1);
-        String box3 = board.get(2);
-        String box4 = board.get(3);
-        String box5 = board.get(4);
-        String box6 = board.get(5);
-        String box7 = board.get(6);
-        String box8 = board.get(7);
-        String box9 = board.get(8);
-
-        if (areBoxesEqual(box1, box2, box3)) {
-            winner = box1;
-        } else if (areBoxesEqual(box4, box5, box6)) {
-            winner = box4;
-        } else if (areBoxesEqual(box7, box8, box9)) {
-            winner = box7;
-        } else if (areBoxesEqual(box1, box4, box7)) {
-            winner = box1;
-        } else if (areBoxesEqual(box2, box5, box8)) {
-            winner = box2;
-        } else if (areBoxesEqual(box3, box6, box9)) {
-            winner = box3;
-        } else if (areBoxesEqual(box1, box5, box9)) {
-            winner = box1;
-        } else if (areBoxesEqual(box3, box5, box7)) {
-            winner = box3;
-        }
-        return winner.toUpperCase();
-    }
-
-    private boolean areBoxesEqual(String box1, String box2, String box3) {
-        return box1.equals(box2) && box2.equals(box3) && !box1.equals("");
-    }
-
     public String statusMessage() {
 
-        return getSymbol().toUpperCase() + ", it's your turn!";
+        return currentPlayerSymbol().toUpperCase() + ", it's your turn!";
     }
 
-    public String getSymbol() {
+    public String currentPlayerSymbol() {
         if (turnNumber % 2 == 1) {
             return "x";
         } else {

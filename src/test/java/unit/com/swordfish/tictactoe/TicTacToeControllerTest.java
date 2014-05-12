@@ -83,10 +83,9 @@ public class TicTacToeControllerTest {
     @Test
     public void shouldTellCounterToIncrementWhenPlayerMovesSuccessfully() throws Exception {
         GameManager stubGameManager = mock(GameManager.class);
-        String validPlayerMoveInput = "1";
+        String validPlayerMoveInput = "0";
         TicTacToeController anotherTicTacToeController = new TicTacToeController(board, stubGameManager);
-
-        when(stubGameManager.whoIsTheWinner()).thenReturn("");
+        when(stubGameManager.currentPlayerSymbol()).thenReturn("X");
 
         anotherTicTacToeController.makeMove(validPlayerMoveInput);
 
@@ -104,8 +103,8 @@ public class TicTacToeControllerTest {
         int secondPlayerTurnNumber = 2;
         when(stubGameManager.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
         when(mockBoard.get(anyInt())).thenReturn("");
-        when(stubGameManager.whoIsTheWinner()).thenReturn("");
-        when(stubGameManager.getSymbol()).thenReturn(PLAYER_2_SYMBOL);
+        when(mockBoard.whoIsTheWinner()).thenReturn("");
+        when(stubGameManager.currentPlayerSymbol()).thenReturn(PLAYER_2_SYMBOL);
 
         anotherTicTacToeController.makeMove(Integer.toString(playerMoveIndex));
 
@@ -132,7 +131,7 @@ public class TicTacToeControllerTest {
         int numberOfBoxesPlus1 = 10;
         when(stubGameManager.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
         when(stubBoard.get(anyInt())).thenReturn("");
-        when(stubGameManager.whoIsTheWinner()).thenReturn("");
+        when(stubBoard.whoIsTheWinner()).thenReturn("");
 
         TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
         String playerMoveIndex = "9";
@@ -153,7 +152,7 @@ public class TicTacToeControllerTest {
         int turnNumber = 6;
         when(stubGameManager.getTurnNumber()).thenReturn(turnNumber);
         when(stubBoard.get(turnNumber)).thenReturn("");
-        when(stubGameManager.whoIsTheWinner()).thenReturn("x");
+        when(stubBoard.whoIsTheWinner()).thenReturn("x");
 
         String minimumMovesToWin = "6";
         ModelAndView mav = anotherTicTacToeController.makeMove(minimumMovesToWin);

@@ -39,9 +39,9 @@ public class TicTacToeController {
         String winner = "";
         if (error.isEmpty()) {
             int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName);
-            String symbol = gameManager.getSymbol();
+            String symbol = gameManager.currentPlayerSymbol();
             board.put(boxToBeUpdatedIndex, symbol);
-            winner = gameManager.whoIsTheWinner();
+            winner = board.whoIsTheWinner();
             gameManager.increment();
         }
 
