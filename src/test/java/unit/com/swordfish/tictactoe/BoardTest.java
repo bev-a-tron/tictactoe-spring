@@ -1,5 +1,6 @@
-package com.swordfish.tictactoe;
+package unit.com.swordfish.tictactoe;
 
+import com.swordfish.tictactoe.Board;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
