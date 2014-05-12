@@ -38,7 +38,7 @@ public class TicTacToeController {
 
         String winner = "";
         if (error.isEmpty()) {
-            int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+            int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName);
             String symbol = gameManager.getSymbol();
             board.put(boxToBeUpdatedIndex, symbol);
             winner = gameManager.whoIsTheWinner();
@@ -67,9 +67,9 @@ public class TicTacToeController {
         String error = "";
 
         if (!isInteger(playerMoveInputName)) {
-            error = "Words are not allowed. Please enter a number between 1 and 9.";
+            error = "Words are not allowed.";
         } else if (!isInRange(playerMoveInputName)) {
-            error = "Number out of range. Please enter a number between 1 and 9.";
+            error = "Number out of range.";
         } else if (!isAvailable(playerMoveInputName)) {
             error = "You can't go there. Choose again.";
         }
@@ -78,12 +78,12 @@ public class TicTacToeController {
     }
 
     private boolean isAvailable(String playerMoveInputName) {
-        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName);
         return board.get(boxToBeUpdatedIndex).equals("");
     }
 
     private boolean isInRange(String playerMoveInputName) {
-        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName) - 1;
+        int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName);
         return !((boxToBeUpdatedIndex < 0) || (boxToBeUpdatedIndex > 8));
     }
 

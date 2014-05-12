@@ -35,6 +35,7 @@ public class TicTacToeTest {
         assertThat(element.getAttribute("id"), is("game-board"));
     }
 
+    //TODO: Need a clearer way to find out where the failure is in this test
     @Test
     public void shouldMarkBoard() throws Exception {
 

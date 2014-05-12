@@ -36,9 +36,9 @@ public class TicTacToeControllerTest {
     }
 
     @Test
-    public void shouldPutXInBoxOne() {
+    public void shouldPutXInBoxZero() {
 
-        String playerMoveInput = "1";
+        String playerMoveInput = "0";
         ticTacToeController.makeMove(playerMoveInput);
 
         assertThat(board.get(0), is(PLAYER_1_SYMBOL));
@@ -57,7 +57,7 @@ public class TicTacToeControllerTest {
     @Test
     public void shouldAddErrorToModelWhenGivenOutOfScopeValue() {
 
-        String outOfScopeValue = "0";
+        String outOfScopeValue = "-1";
 
         ModelAndView mav = ticTacToeController.makeMove(outOfScopeValue);
 
@@ -99,8 +99,7 @@ public class TicTacToeControllerTest {
         Board mockBoard = mock(Board.class);
         GameManager stubGameManager = mock(GameManager.class);
         TicTacToeController anotherTicTacToeController = new TicTacToeController(mockBoard, stubGameManager);
-        String playerMove = "3";
-        int playerMoveIndex = Integer.parseInt(playerMove) - 1;
+        int playerMoveIndex = 2;
 
         int secondPlayerTurnNumber = 2;
         when(stubGameManager.getTurnNumber()).thenReturn(secondPlayerTurnNumber);
@@ -108,7 +107,7 @@ public class TicTacToeControllerTest {
         when(stubGameManager.whoIsTheWinner()).thenReturn("");
         when(stubGameManager.getSymbol()).thenReturn(PLAYER_2_SYMBOL);
 
-        anotherTicTacToeController.makeMove(playerMove);
+        anotherTicTacToeController.makeMove(Integer.toString(playerMoveIndex));
 
         verify(mockBoard).put(playerMoveIndex, PLAYER_2_SYMBOL);
     }
@@ -136,14 +135,15 @@ public class TicTacToeControllerTest {
         when(stubGameManager.whoIsTheWinner()).thenReturn("");
 
         TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
-        String playerMove = "9";
-        ModelAndView mav = anotherTicTacToeController.makeMove(playerMove);
+        String playerMoveIndex = "9";
+        ModelAndView mav = anotherTicTacToeController.makeMove(playerMoveIndex);
 
         Integer numberOfTurns = (Integer) mav.getModel().get("turnNumber");
 
         assertThat(numberOfTurns, is(numberOfBoxesPlus1));
     }
 
+//    TODO: Refactor this test to have fewer stubs
     @Test
     public void shouldAddWinningMessageToModel() throws Exception {
         Board stubBoard = mock(Board.class);
@@ -152,7 +152,7 @@ public class TicTacToeControllerTest {
 
         int turnNumber = 6;
         when(stubGameManager.getTurnNumber()).thenReturn(turnNumber);
-        when(stubBoard.get(turnNumber - 1)).thenReturn("");
+        when(stubBoard.get(turnNumber)).thenReturn("");
         when(stubGameManager.whoIsTheWinner()).thenReturn("x");
 
         String minimumMovesToWin = "6";
