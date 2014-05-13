@@ -1,7 +1,7 @@
 package unit.com.swordfish.tictactoe;
 
 import com.swordfish.tictactoe.Board;
-import com.swordfish.tictactoe.GameManager;
+import com.swordfish.tictactoe.Game;
 import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,22 +11,22 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class GameManagerTest {
+public class GameTest {
     Board stubBoard;
-    GameManager gameManager;
+    Game game;
 
     @Before
     public void setUp() throws Exception {
 
         stubBoard = mock(Board.class);
-        gameManager = new GameManager(stubBoard);
+        game = new Game(stubBoard);
 
     }
 
     @Test
     public void shouldReportTurnX() throws Exception {
 
-        String status = gameManager.statusMessage();
+        String status = game.statusMessage();
 
         assertThat(status, is("X, it's your turn!"));
 
@@ -35,8 +35,8 @@ public class GameManagerTest {
     @Test
     public void shouldReportTurnO() throws Exception {
 
-        gameManager.increment();
-        String status = gameManager.statusMessage();
+        game.increment();
+        String status = game.statusMessage();
 
         assertThat(status, is("O, it's your turn!"));
 
@@ -45,18 +45,18 @@ public class GameManagerTest {
     @Test
     public void shouldIncrementCounter() {
 
-        gameManager.increment();
+        game.increment();
 
-        MatcherAssert.assertThat(gameManager.getTurnNumber(), is(2));
+        MatcherAssert.assertThat(game.getTurnNumber(), is(2));
     }
 
     @Test
     public void shouldIncrementCounterAgain() {
 
-        gameManager.increment();
-        gameManager.increment();
+        game.increment();
+        game.increment();
 
-        MatcherAssert.assertThat(gameManager.getTurnNumber(), is(3));
+        MatcherAssert.assertThat(game.getTurnNumber(), is(3));
 
     }
 
@@ -64,10 +64,10 @@ public class GameManagerTest {
     public void shouldTellCounterToIncrementWhenPlayerMovesSuccessfully() throws Exception {
         String validPlayerMoveInput = "0";
 
-        gameManager.update(validPlayerMoveInput);
+        game.update(validPlayerMoveInput);
 
         //TODO: Extract var
-        assertThat(gameManager.getTurnNumber(), is(2));
+        assertThat(game.getTurnNumber(), is(2));
     }
 
     //TODO: Method name is not clear. Split into two tests?
@@ -75,12 +75,12 @@ public class GameManagerTest {
     public void shouldUpdateWithCurrentPlayerSymbol() throws Exception {
         Board board = mock(Board.class);
 
-        GameManager gameManager = new GameManager(board);
+        Game game = new Game(board);
 
         String boxToUpdate = "1";
-        gameManager.update(boxToUpdate);
+        game.update(boxToUpdate);
 
         verify(board).drawSymbolInBox(Integer.parseInt(boxToUpdate), "x");
-        assertThat(gameManager.currentPlayerSymbol(), is("o"));
+        assertThat(game.currentPlayerSymbol(), is("o"));
     }
 }

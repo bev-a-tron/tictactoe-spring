@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 // TODO: What is gameManager?
 
 @Component
-public class GameManager {
+public class Game {
 
     private int turnNumber = 1;
     public Board board;
 
     @Autowired
-    public GameManager(Board board) {
+    public Game(Board board) {
         this.board = board;
     }
 
