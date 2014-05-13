@@ -11,26 +11,22 @@ import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.StringContains.containsString;
 import static org.mockito.Mockito.*;
 
 
 public class TicTacToeControllerTest {
 
     private static final String PLAYER_1_SYMBOL="x";
+
     Board board;
     GameManager gameManager;
-
     TicTacToeController ticTacToeController;
-
-    public TicTacToeControllerTest() {
-        board = new Board();
-        gameManager = new GameManager(board);
-    }
 
     @Before
     public void setUp() throws Exception {
 
+        board = new Board();
+        gameManager = new GameManager(board);
         ticTacToeController = new TicTacToeController(board, gameManager);
     }
 
@@ -53,32 +49,7 @@ public class TicTacToeControllerTest {
         assertTrue(mav.getModel().containsKey("board"));
     }
 
-    @Test
-    public void shouldAddErrorToModelWhenGivenOutOfScopeValue() {
-
-        String outOfScopeValue = "-1";
-
-        ModelAndView mav = ticTacToeController.makeMove(outOfScopeValue);
-
-        String error = (String) mav.getModel().get("errors");
-
-        assertThat(error, containsString("Number out of range."));
-
-    }
-
-    @Test
-    public void shouldAddStringErrorWhenANonNumericalValueIsPassedIn() {
-
-        String nonIntegerValue = "string";
-
-        ModelAndView mav = ticTacToeController.makeMove(nonIntegerValue);
-
-        String error = (String) mav.getModel().get("errors");
-
-        assertThat(error, containsString("Words are not allowed."));
-
-    }
-
+    //TODO: Too many stubs. Checking too much?
     @Test
     public void shouldUpdateTheBoardAndGetTheWinner() throws Exception {
         Board board = mock(Board.class);
@@ -96,18 +67,6 @@ public class TicTacToeControllerTest {
 
         verify(gameManager).update(Integer.toString(playerMoveIndex));
         verify(board, times(2)).whoIsTheWinner();
-    }
-
-    @Test
-    public void shouldReceiveErrorWhenMovingToSamePosition() throws Exception {
-
-        String playerMoveInputName = "1";
-        ticTacToeController.makeMove(playerMoveInputName);
-        ModelAndView mav = ticTacToeController.makeMove(playerMoveInputName);
-
-        String error = (String) mav.getModel().get("errors");
-
-        assertThat(error, containsString("You can't go there."));
     }
 
     @Test
@@ -150,6 +109,8 @@ public class TicTacToeControllerTest {
 
     }
 
+
+    //TODO: looks large, reduce stub
     @Test
     public void shouldShowEndOfGameMessageWhen9BoxesFull() throws Exception {
         Board fullBoard = mock(Board.class);
@@ -184,24 +145,6 @@ public class TicTacToeControllerTest {
         ModelAndView mav = ticTacToeController.makeMove(playerMoveIndex);
 
         assertThat((Boolean) mav.getModel().get("isGameOver"), is(false));
-    }
-
-    @Test
-    public void shouldAddEndOfGameMessageToModel() throws Exception {
-        Board stubBoard = mock(Board.class);
-        GameManager stubGameManager = mock(GameManager.class);
-
-        int numberOfBoxesPlus1 = 10;
-        when(stubGameManager.getTurnNumber()).thenReturn(numberOfBoxesPlus1);
-        when(stubBoard.getBoxContent(anyInt())).thenReturn("");
-        when(stubBoard.whoIsTheWinner()).thenReturn("");
-        TicTacToeController anotherTicTacToeController = new TicTacToeController(stubBoard, stubGameManager);
-        String playerMoveIndex = "9";
-        ModelAndView mav = anotherTicTacToeController.makeMove(playerMoveIndex);
-
-        Integer numberOfTurns = (Integer) mav.getModel().get("turnNumber");
-
-        assertThat(numberOfTurns, is(numberOfBoxesPlus1));
     }
 
     @Test

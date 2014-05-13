@@ -1,3 +1,5 @@
+/* How to best structure CSS? */
+
 .box-input {
     -webkit-appearance: none;
     display: block;
@@ -10,6 +12,7 @@
     outline: 0;
 }
 
+/*This is a bad name*/
 .big {
     -webkit-appearance: none;
     height: 100%;

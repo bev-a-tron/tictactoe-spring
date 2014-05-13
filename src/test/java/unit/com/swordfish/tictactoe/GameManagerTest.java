@@ -66,9 +66,11 @@ public class GameManagerTest {
 
         gameManager.update(validPlayerMoveInput);
 
+        //TODO: Extract var
         assertThat(gameManager.getTurnNumber(), is(2));
     }
 
+    //TODO: Method name is not clear. Split into two tests?
     @Test
     public void shouldUpdateWithCurrentPlayerSymbol() throws Exception {
         Board board = mock(Board.class);
@@ -78,7 +80,7 @@ public class GameManagerTest {
         String boxToUpdate = "1";
         gameManager.update(boxToUpdate);
 
-        assertThat(gameManager.currentPlayerSymbol(), is("o"));
         verify(board).drawSymbolInBox(Integer.parseInt(boxToUpdate), "x");
+        assertThat(gameManager.currentPlayerSymbol(), is("o"));
     }
 }

@@ -28,6 +28,8 @@ public class Board {
         String box7 = boxes[7];
         String box8 = boxes[8];
 
+        //TODO: Lots of if/else, replace with polymorphism?
+
         if (areBoxesEqual(box0, box1, box2)) {
             winner = box0;
         } else if (areBoxesEqual(box3, box4, box5)) {
@@ -48,6 +50,7 @@ public class Board {
         return winner.toUpperCase();
     }
 
+    //TODO: Is this smelly? Private methods to support public class methods?
     private boolean areBoxesEqual(String box1, String box2, String box3) {
         return box1.equals(box2) && box2.equals(box3) && !box1.equals("");
     }

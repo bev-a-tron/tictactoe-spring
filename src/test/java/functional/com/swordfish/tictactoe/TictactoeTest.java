@@ -31,6 +31,7 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoard() {
+        //TODO: helper class for low-level webdriver methods. High level API appropriate here?
         WebElement element = driver.findElement(By.id("game-board"));
         assertThat(element.getAttribute("id"), is("game-board"));
     }
@@ -57,6 +58,7 @@ public class TicTacToeTest {
         assertThat(box2.getText(), is("o"));
     }
 
+    //TODO this passes all the time (even when we don't run the server), useless test?
     @Test(expected = NoSuchElementException.class)
     public void shouldNotLetPlayerChooseBoxThatIsTaken() throws Exception {
 
@@ -65,6 +67,7 @@ public class TicTacToeTest {
 
     }
 
+//    TODO: test is testing two things: game over when draw, and play again link takes you to a blank board
     @Test
     public void shouldDisplayMessageWhenBoardIsFull() throws Exception {
 
@@ -106,6 +109,7 @@ public class TicTacToeTest {
 
     }
 
+    //TODO: Private methods in support of tests ok?
     private void fillOneBox(int playerMoveInput) {
         String boxButtonName = "box" + playerMoveInput + "-button";
         driver.findElement(By.id(boxButtonName)).click();
@@ -114,6 +118,7 @@ public class TicTacToeTest {
     @Test
     public void shouldDeclarePlayer1TheWinner() throws Exception {
 
+//        TODO: make method called has3InARow, and stub that instead of clicking through a game
         driver.findElement(By.id("box0-button")).click();
         driver.findElement(By.id("box3-button")).click();
         driver.findElement(By.id("box1-button")).click();

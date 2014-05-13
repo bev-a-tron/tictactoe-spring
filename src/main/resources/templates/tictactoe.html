@@ -4,6 +4,7 @@
         <title>Tic Tac Toe</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="../static/css/tictactoe.css" th:href="@{/css/tictactoe.css}" />
+        <!--TODO not used anymore, delete-->
         <script type="text/javascript" src="../static/js/jquery-2.1.0.js" ></script>
         <script type="text/javascript" src="../static/js/tictactoe.js"></script>
     </head>
@@ -19,8 +20,12 @@
         <table id="game-board">
             <tr>
                 <td id="box0" class="square">
+                    <!-- Any way to clean up board.getBoxContent(#)? Single boolean value? -->
+                    <!-- How much logic is ok in a view? -->
+                    <!-- Table is built with separate css classes, any way to make this cleaner to reduce duplication? -->
                     <div th:if="${board.getBoxContent(0)} !=''" th:text="${board.getBoxContent(0)}">
                     </div>
+                    <!-- Should we generate this HTML in Java, and return it? Include partial html files?-->
                     <form th:if="${board.getBoxContent(0)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="0" name="box-input" id="box0-button" class="box-input"/>
                     </form>
