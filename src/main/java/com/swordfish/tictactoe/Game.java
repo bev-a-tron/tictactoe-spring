@@ -20,10 +20,6 @@ public class Game {
         return turnNumber;
     }
 
-    public void increment() {
-        turnNumber++;
-    }
-
     public String statusMessage() {
 
         return currentPlayerSymbol().toUpperCase() + ", it's your turn!";
@@ -46,7 +42,7 @@ public class Game {
         int boxToBeUpdatedIndex = Integer.parseInt(playerMoveInputName);
         String symbol = currentPlayerSymbol();
         board.drawSymbolInBox(boxToBeUpdatedIndex, symbol);
-        increment();
+        turnNumber++;
 
         return board;
     }

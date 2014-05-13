@@ -10,12 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TicTacToeController {
 
-    private GameManager game;
+    private Game game;
     //TODO: controller and gamemanager both have a board.
     private Board board;
 
     @Autowired
-    public TicTacToeController(Board board, GameManager game) {
+    public TicTacToeController(Board board, Game game) {
         this.board = board;
         this.game = game;
     }
@@ -23,7 +23,7 @@ public class TicTacToeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView showBoard() {
         this.board = new Board();
-        this.game = new GameManager(board);
+        this.game = new Game(board);
 
         ModelAndView mav = new ModelAndView("tictactoe");
         mav.addObject("gameStatus", game.statusMessage());

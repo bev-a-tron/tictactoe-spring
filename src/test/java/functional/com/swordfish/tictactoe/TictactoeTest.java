@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -30,62 +29,26 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void shouldDrawBoard() {
-        //TODO: helper class for low-level webdriver methods. High level API appropriate here?
-        WebElement element = driver.findElement(By.id("game-board"));
-        assertThat(element.getAttribute("id"), is("game-board"));
-    }
+    public void shouldEndTheGameWithADraw() throws Exception {
+        fillAllTheBoxes();
 
-    //TODO: Need a clearer way to find out where the failure is in this test
-    @Test
-    public void shouldMarkBoard() throws Exception {
+        showsGameOverMessage();
 
-        driver.findElement(By.id("box0-button")).click();
+        clicksPlayAgain();
 
-        WebElement box0 = driver.findElement(By.id("box0"));
-        assertThat(box0.getText(), is("x"));
+        checkThatBoardIsEmpty();
     }
 
     @Test
-    public void shouldMarkBoardWithO() throws Exception {
+    public void shouldEndTheGameWithAWinner() throws Exception {
+        clickBoxesSoXWins();
 
-        driver.findElement(By.id("box0-button")).click();
-        driver.findElement(By.id("box1-button")).click();
+        checkThatStatusSaysXWon();
 
-        WebElement box1 = driver.findElement(By.id("box0"));
-        WebElement box2 = driver.findElement(By.id("box1"));
-        assertThat(box1.getText(), is("x"));
-        assertThat(box2.getText(), is("o"));
+        showsGameOverMessage();
     }
 
-    //TODO this passes all the time (even when we don't run the server), useless test?
-    @Test(expected = NoSuchElementException.class)
-    public void shouldNotLetPlayerChooseBoxThatIsTaken() throws Exception {
-
-        driver.findElement(By.id("box0-button")).click();
-        driver.findElement(By.id("box0-button"));
-
-    }
-
-//    TODO: test is testing two things: game over when draw, and play again link takes you to a blank board
-    @Test
-    public void shouldDisplayMessageWhenBoardIsFull() throws Exception {
-
-        //TODO: This is ugly
-        int[] moveSequenceToEnsureDraw = {0, 1, 2, 4, 3, 5, 7, 6, 8};
-
-        for (int move : moveSequenceToEnsureDraw) {
-            fillOneBox(move);
-        }
-
-        WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
-
-        assertThat(endOfGameMessage.getText(), containsString("Game over."));
-
-        WebElement playAgainLink = driver.findElement(By.id("play-again-link"));
-
-        playAgainLink.click();
-
+    private void checkThatBoardIsEmpty() {
         WebElement box0 = driver.findElement(By.id("box0"));
         WebElement box1 = driver.findElement(By.id("box1"));
         WebElement box2 = driver.findElement(By.id("box2"));
@@ -105,34 +68,40 @@ public class TicTacToeTest {
         assertThat(box6.getText(), is(""));
         assertThat(box7.getText(), is(""));
         assertThat(box8.getText(), is(""));
-
-
     }
 
-    //TODO: Private methods in support of tests ok?
-    private void fillOneBox(int playerMoveInput) {
-        String boxButtonName = "box" + playerMoveInput + "-button";
-        driver.findElement(By.id(boxButtonName)).click();
+    private void clicksPlayAgain() {
+        WebElement playAgainLink = driver.findElement(By.id("play-again-link"));
+
+        playAgainLink.click();
     }
 
-    @Test
-    public void shouldDeclarePlayer1TheWinner() throws Exception {
+    private void showsGameOverMessage() {
+        WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
 
-//        TODO: make method called has3InARow, and stub that instead of clicking through a game
+        assertThat(endOfGameMessage.getText(), containsString("Game over."));
+    }
+
+    private void fillAllTheBoxes() {
+        int[] moveSequenceToEnsureDraw = {0, 1, 2, 4, 3, 5, 7, 6, 8};
+
+        for (int move : moveSequenceToEnsureDraw) {
+            String boxButtonName = "box" + move + "-button";
+            driver.findElement(By.id(boxButtonName)).click();
+        }
+    }
+
+    private void checkThatStatusSaysXWon() {
+        WebElement winner = driver.findElement(By.id("game-status"));
+
+        assertThat(winner.getText(), containsString("X"));
+    }
+
+    private void clickBoxesSoXWins() {
         driver.findElement(By.id("box0-button")).click();
         driver.findElement(By.id("box3-button")).click();
         driver.findElement(By.id("box1-button")).click();
         driver.findElement(By.id("box4-button")).click();
         driver.findElement(By.id("box2-button")).click();
-
-        WebElement winner = driver.findElement(By.id("game-status"));
-
-        assertThat(winner.getText(), containsString("X"));
-
-        WebElement playAgainMessage = driver.findElement(By.id("play-again-message"));
-
-        assertThat(playAgainMessage.getText(), containsString("Play again?"));
-
     }
-
 }

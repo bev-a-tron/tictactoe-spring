@@ -35,7 +35,7 @@ public class GameTest {
     @Test
     public void shouldReportTurnO() throws Exception {
 
-        game.increment();
+        game.update("0");
         String status = game.statusMessage();
 
         assertThat(status, is("O, it's your turn!"));
@@ -45,7 +45,7 @@ public class GameTest {
     @Test
     public void shouldIncrementCounter() {
 
-        game.increment();
+        game.update("0");
 
         MatcherAssert.assertThat(game.getTurnNumber(), is(2));
     }
@@ -53,8 +53,8 @@ public class GameTest {
     @Test
     public void shouldIncrementCounterAgain() {
 
-        game.increment();
-        game.increment();
+        game.update("0");
+        game.update("1");
 
         MatcherAssert.assertThat(game.getTurnNumber(), is(3));
 
