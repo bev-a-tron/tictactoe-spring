@@ -4,7 +4,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -30,56 +29,27 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void shouldDrawBoard() {
-        WebElement element = driver.findElement(By.id("game-board"));
-        assertThat(element.getAttribute("id"), is("game-board"));
+    public void shouldEndTheGameWithADraw() throws Exception {
+        fillAllTheBoxes();
+
+        showsGameOverMessage();
+
+        clicksPlayAgain();
+
+        checkThatBoardIsEmpty();
     }
 
     @Test
-    public void shouldMarkBoard() throws Exception {
+    public void shouldEndTheGameWithAWinner() throws Exception {
+        clickBoxesSoXWins();
 
-        driver.findElement(By.id("box1-button")).click();
+        checkThatStatusSaysXWon();
 
-        WebElement box1 = driver.findElement(By.id("box1"));
-        assertThat(box1.getText().toLowerCase(), is("x"));
+        showsGameOverMessage();
     }
 
-    @Test
-    public void shouldMarkBoardWithO() throws Exception {
-
-        driver.findElement(By.id("box1-button")).click();
-        driver.findElement(By.id("box2-button")).click();
-
-        WebElement box1 = driver.findElement(By.id("box1"));
-        WebElement box2 = driver.findElement(By.id("box2"));
-        assertThat(box1.getText().toLowerCase(), is("x"));
-        assertThat(box2.getText().toLowerCase(), is("o"));
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void shouldNotLetPlayerChooseBoxThatIsTaken() throws Exception {
-
-        driver.findElement(By.id("box1-button")).click();
-        driver.findElement(By.id("box1-button"));
-
-    }
-
-    @Test
-    public void shouldDisplayMessageWhenBoardIsFull() throws Exception {
-
-        int[] playerMoveInputArray = {1, 3, 2, 4, 6, 5, 7, 8, 9};
-        for (int playerMoveInput = 0; playerMoveInput < 9; playerMoveInput++) {
-            fillOneBox(playerMoveInputArray[playerMoveInput]);
-        }
-
-        WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
-
-        assertThat(endOfGameMessage.getText(), containsString("Game over."));
-
-        WebElement playAgainLink = driver.findElement(By.id("play-again-link"));
-
-        playAgainLink.click();
-
+    private void checkThatBoardIsEmpty() {
+        WebElement box0 = driver.findElement(By.id("box0"));
         WebElement box1 = driver.findElement(By.id("box1"));
         WebElement box2 = driver.findElement(By.id("box2"));
         WebElement box3 = driver.findElement(By.id("box3"));
@@ -88,43 +58,50 @@ public class TicTacToeTest {
         WebElement box6 = driver.findElement(By.id("box6"));
         WebElement box7 = driver.findElement(By.id("box7"));
         WebElement box8 = driver.findElement(By.id("box8"));
-        WebElement box9 = driver.findElement(By.id("box9"));
 
-        assertThat(box1.getText().toLowerCase(), is(""));
-        assertThat(box2.getText().toLowerCase(), is(""));
-        assertThat(box3.getText().toLowerCase(), is(""));
-        assertThat(box4.getText().toLowerCase(), is(""));
-        assertThat(box5.getText().toLowerCase(), is(""));
-        assertThat(box6.getText().toLowerCase(), is(""));
-        assertThat(box7.getText().toLowerCase(), is(""));
-        assertThat(box8.getText().toLowerCase(), is(""));
-        assertThat(box9.getText().toLowerCase(), is(""));
-
-
+        assertThat(box0.getText(), is(""));
+        assertThat(box1.getText(), is(""));
+        assertThat(box2.getText(), is(""));
+        assertThat(box3.getText(), is(""));
+        assertThat(box4.getText(), is(""));
+        assertThat(box5.getText(), is(""));
+        assertThat(box6.getText(), is(""));
+        assertThat(box7.getText(), is(""));
+        assertThat(box8.getText(), is(""));
     }
 
-    private void fillOneBox(int playerMoveInput) {
-        String boxButtonName = "box" + playerMoveInput + "-button";
-        driver.findElement(By.id(boxButtonName)).click();
+    private void clicksPlayAgain() {
+        WebElement playAgainLink = driver.findElement(By.id("play-again-link"));
+
+        playAgainLink.click();
     }
 
-    @Test
-    public void shouldDeclarePlayer1TheWinner() throws Exception {
+    private void showsGameOverMessage() {
+        WebElement endOfGameMessage = driver.findElement(By.id("play-again-message"));
 
+        assertThat(endOfGameMessage.getText(), containsString("Game over."));
+    }
+
+    private void fillAllTheBoxes() {
+        int[] moveSequenceToEnsureDraw = {0, 1, 2, 4, 3, 5, 7, 6, 8};
+
+        for (int move : moveSequenceToEnsureDraw) {
+            String boxButtonName = "box" + move + "-button";
+            driver.findElement(By.id(boxButtonName)).click();
+        }
+    }
+
+    private void checkThatStatusSaysXWon() {
+        WebElement winner = driver.findElement(By.id("game-status"));
+
+        assertThat(winner.getText(), containsString("X"));
+    }
+
+    private void clickBoxesSoXWins() {
+        driver.findElement(By.id("box0-button")).click();
+        driver.findElement(By.id("box3-button")).click();
         driver.findElement(By.id("box1-button")).click();
         driver.findElement(By.id("box4-button")).click();
         driver.findElement(By.id("box2-button")).click();
-        driver.findElement(By.id("box5-button")).click();
-        driver.findElement(By.id("box3-button")).click();
-
-        WebElement winner = driver.findElement(By.id("winner"));
-
-        assertThat(winner.getText(), containsString("X"));
-
-        WebElement playAgainMessage = driver.findElement(By.id("play-again-message"));
-
-        assertThat(playAgainMessage.getText(), containsString("Play again?"));
-
     }
-
 }

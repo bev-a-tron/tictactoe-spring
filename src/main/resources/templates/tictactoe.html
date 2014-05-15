@@ -4,84 +4,92 @@
         <title>Tic Tac Toe</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" type="text/css" href="../static/css/tictactoe.css" th:href="@{/css/tictactoe.css}" />
+        <!--TODO not used anymore, delete-->
         <script type="text/javascript" src="../static/js/jquery-2.1.0.js" ></script>
         <script type="text/javascript" src="../static/js/tictactoe.js"></script>
     </head>
     <body>
         <div id="header">
-            <div id="winner" class="message" th:if="${winner} != ''" th:text="${winner} + ' wins!'">Beverly wins!</div>
-
-            <div th:if="${turnNumber == 10} or ${winner} != ''" class="message" id="play-again-message">Game over. <a href="/" id="play-again-link">Play again?</a></div>
+            <div id="title" class="message">
+                Tic-tac-toe
+            </div>
+            <div id="game-status" class="message" th:text="${gameStatus}">Game status message goes here.</div>
+            <div th:if="${isGameOver}" class="message" id="play-again-message">Game over. <a href="/" id="play-again-link">Play again?</a></div>
         </div>
+
         <table id="game-board">
             <tr>
-                <td id="box1" class="square big">
-                    <div th:if="${box1} !=''" th:text="${box1}">
+                <td id="box0" class="square">
+                    <!-- Any way to clean up board.getBoxContent(#)? Single boolean value? -->
+                    <!-- How much logic is ok in a view? -->
+                    <!-- Table is built with separate css classes, any way to make this cleaner to reduce duplication? -->
+                    <div th:if="${board.getBoxContent(0)} !=''" th:text="${board.getBoxContent(0)}">
                     </div>
-                    <form th:if="${box1} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <!-- Should we generate this HTML in Java, and return it? Include partial html files?-->
+                    <form th:if="${board.getBoxContent(0)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
+                        <input type="submit" value="0" name="box-input" id="box0-button" class="box-input"/>
+                    </form>
+                </td>
+                <td id="box1" class="square vertical-lines">
+                    <div th:if="${board.getBoxContent(1)} !=''" th:text="${board.getBoxContent(1)}">
+                    </div>
+                    <form th:if="${board.getBoxContent(1)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="1" name="box-input" id="box1-button" class="box-input"/>
                     </form>
                 </td>
-                <td id="box2" class="square vertical-lines">
-                    <div th:if="${box2} !=''" th:text="${box2}">
+                <td id="box2" class="square">
+                    <div th:if="${board.getBoxContent(2)} !=''" th:text="${board.getBoxContent(2)}">
                     </div>
-                    <form th:if="${box2} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <form th:if="${board.getBoxContent(2)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="2" name="box-input" id="box2-button" class="box-input"/>
                     </form>
                 </td>
-                <td id="box3" class="square">
-                    <div th:if="${box3} !=''" th:text="${box3}">
+            </tr>
+
+            <tr>
+                <td id="box3" class="square horizontal-lines">
+                    <div th:if="${board.getBoxContent(3)} !=''" th:text="${board.getBoxContent(3)}">
                     </div>
-                    <form th:if="${box3} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <form th:if="${board.getBoxContent(3)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="3" name="box-input" id="box3-button" class="box-input"/>
                     </form>
                 </td>
-            </tr>
-
-            <tr>
-                <td id="box4" class="square horizontal-lines">
-                    <div th:if="${box4} !=''" th:text="${box4}">
+                <td id="box4" class="square horizontal-lines vertical-lines">
+                    <div th:if="${board.getBoxContent(4)} !=''" th:text="${board.getBoxContent(4)}">
                     </div>
-                    <form th:if="${box4} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <form th:if="${board.getBoxContent(4)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="4" name="box-input" id="box4-button" class="box-input"/>
                     </form>
                 </td>
-                <td id="box5" class="square horizontal-lines vertical-lines">
-                    <div th:if="${box5} !=''" th:text="${box5}">
+                <td id="box5" class="square horizontal-lines">
+                    <div th:if="${board.getBoxContent(5)} !=''" th:text="${board.getBoxContent(5)}">
                     </div>
-                    <form th:if="${box5} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <form th:if="${board.getBoxContent(5)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="5" name="box-input" id="box5-button" class="box-input"/>
-                    </form>
-                </td>
-                <td id="box6" class="square horizontal-lines">
-                    <div th:if="${box6} !=''" th:text="${box6}">
-                    </div>
-                    <form th:if="${box6} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
-                        <input type="submit" value="6" name="box-input" id="box6-button" class="box-input"/>
                     </form>
                 </td>
             </tr>
 
             <tr>
-                <td id="box7" class="square">
-                    <div th:if="${box7} !=''" th:text="${box7}">
+                <td id="box6" class="square">
+                    <div th:if="${board.getBoxContent(6)} !=''" th:text="${board.getBoxContent(6)}">
                     </div>
-                    <form th:if="${box7} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <form th:if="${board.getBoxContent(6)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
+                        <input type="submit" value="6" name="box-input" id="box6-button" class="box-input"/>
+                    </form>
+                </td>
+                <td id="box7" class="square vertical-lines">
+                    <div th:if="${board.getBoxContent(7)} !=''" th:text="${board.getBoxContent(7)}">
+                    </div>
+                    <form th:if="${board.getBoxContent(7)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="7" name="box-input" id="box7-button" class="box-input"/>
                     </form>
                 </td>
-                <td id="box8" class="square vertical-lines">
-                    <div th:if="${box8} !=''" th:text="${box8}">
+                <td id="box8" class="square">
+                    <div th:if="${board.getBoxContent(8)} !=''" th:text="${board.getBoxContent(8)}">
                     </div>
-                    <form th:if="${box8} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
+                    <form th:if="${board.getBoxContent(8)} == '' and ${!gameStatus.contains('wins')}" action="/" method="post" class="box-form big">
                         <input type="submit" value="8" name="box-input" id="box8-button" class="box-input"/>
-                    </form>
-                </td>
-                <td id="box9" class="square">
-                    <div th:if="${box9} !=''" th:text="${box9}">
-                    </div>
-                    <form th:if="${box9} == '' and ${winner} == ''" action="/" method="post" class="box-form big">
-                        <input type="submit" value="9" name="box-input" id="box9-button" class="box-input"/>
                     </form>
                 </td>
             </tr>

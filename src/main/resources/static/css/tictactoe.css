@@ -1,3 +1,5 @@
+/* How to best structure CSS? */
+
 .box-input {
     -webkit-appearance: none;
     display: block;
@@ -10,14 +12,20 @@
     outline: 0;
 }
 
+/*This is a bad name*/
 .big {
     -webkit-appearance: none;
     height: 100%;
     width: 100%;
 }
 
+#title {
+    font-size: 18pt;
+}
+
 .message {
     text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #winner {
@@ -30,7 +38,7 @@
 }
 
 #header {
-    height: 70px;
+    height: 90px;
 }
 
 .square {
