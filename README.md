@@ -12,3 +12,5 @@ Then navigate to:
 http://localhost:8080
 
 Have fun!
+
+Trying out new Mingle Board.
