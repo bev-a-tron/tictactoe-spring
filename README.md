@@ -13,5 +13,4 @@ http://localhost:8080
 
 Have fun!
 
-Trying out new Mingle Board.
-THIS LINE IS NEW.
+Webhooks is totally going to work this time.
